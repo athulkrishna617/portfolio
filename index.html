@@ -2385,6 +2385,9 @@
               desktop.style.opacity = '1';
               // Trigger GSAP entries
               initGSAPAnimations();
+              // Initialize canvases now that desktop layout has width/height
+              initThreeBackground();
+              initTeleoperationSimulator();
             }, 50);
           }
         });
@@ -2473,7 +2476,7 @@
     })();
 
     /* ══════════ 5. THREE.JS WIREFRAME ROBOT ARM (HERO BACKGROUND) ══════════ */
-    (function initThreeBackground() {
+    function initThreeBackground() {
       const canvas = document.getElementById('threeCanvas');
       if (!canvas) return;
 
@@ -2553,10 +2556,10 @@
         camera.updateProjectionMatrix();
         renderer.setSize(W2, H2);
       });
-    })();
+    }
 
     /* ══════════ 6. SIGNATURE TELEOPERATION SIMULATOR ══════════ */
-    (function initTeleoperationSimulator() {
+    function initTeleoperationSimulator() {
       const canvas = document.getElementById('teleop-canvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -2691,7 +2694,7 @@
 
           ctx.beginPath();
           ctx.arc(x, y, 3, 0, Math.PI * 2);
-          ctx.fillStyle = highRate ? 'var(--accent)' : 'var(--primary)';
+          ctx.fillStyle = highRate ? '#10B981' : '#00F0FF';
           ctx.shadowBlur = 8;
           ctx.shadowColor = ctx.fillStyle;
           ctx.fill();
@@ -2699,10 +2702,10 @@
         }
 
         // Draw Arm 1 (Leader)
-        drawArm(canvas.width * 0.25, canvas.height * 0.8, leaderJoints, 'LEADER ARM', 'var(--primary)');
+        drawArm(canvas.width * 0.25, canvas.height * 0.8, leaderJoints, 'LEADER ARM', '#00F0FF');
         
         // Draw Arm 2 (Follower)
-        drawArm(canvas.width * 0.75, canvas.height * 0.8, followerJoints, 'FOLLOWER ARM', 'var(--accent)');
+        drawArm(canvas.width * 0.75, canvas.height * 0.8, followerJoints, 'FOLLOWER ARM', '#10B981');
       }
 
       function drawArm(baseX, baseY, joints, label, color) {
@@ -2778,7 +2781,7 @@
       }
 
       animateTeleop();
-    })();
+    }
 
     /* ══════════ 7. COMMAND NODE LOGS TERMINAL ══════════ */
     (function initCommandTerminal() {
