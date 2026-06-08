@@ -2731,7 +2731,7 @@
       <!-- Project 3 -->
       <div class="proj-card reveal" data-proj="2">
         <div class="proj-glow"></div>
-        <div class="proj-status active">IN DEVELOPMENT</div>
+        <div class="proj-status online">COMPLETED</div>
         <div class="proj-icon">⚙️</div>
         <h3 class="proj-title">DexArm ROS2 Control Framework</h3>
         <p class="proj-sub">Hardware Interface Layer</p>
@@ -3899,6 +3899,8 @@
         btn.disabled = true;
 
         const params = {
+          name: document.getElementById('from_name').value,
+          email: document.getElementById('from_email').value,
           from_name: document.getElementById('from_name').value,
           from_email: document.getElementById('from_email').value,
           subject: document.getElementById('subject').value,
