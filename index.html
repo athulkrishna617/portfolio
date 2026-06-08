@@ -26,31 +26,31 @@
 
   <style>
     /* ══════════════════════════════════════════════════════
-       ATHUL_OS v4.0 — CUSTOM STYLE SHEET
+       ATHUL_OS v4.0 — MINIMAL LIGHT INDUSTRIAL STYLE SHEET
        ══════════════════════════════════════════════════════ */
 
     :root {
-      --primary: #00F0FF;
-      --primary-dim: rgba(0, 240, 255, 0.15);
-      --primary-glow: rgba(0, 240, 255, 0.4);
-      --accent: #10B981;
-      --accent-dim: rgba(16, 185, 129, 0.15);
-      --accent-glow: rgba(16, 185, 129, 0.4);
-      --warning: #F59E0B;
-      --bg: #030712;
-      --bg-panel: rgba(10, 15, 30, 0.75);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-active: rgba(0, 240, 255, 0.3);
-      --text: #F8FAFC;
-      --text-muted: #64748B;
-      --text-dim: #94A3B8;
+      --primary: #FF5C00; /* Teenage Engineering Industrial Orange */
+      --primary-dim: rgba(255, 92, 0, 0.06);
+      --primary-glow: rgba(255, 92, 0, 0.15);
+      --accent: #059669; /* Emerald Green */
+      --accent-dim: rgba(5, 150, 105, 0.06);
+      --accent-glow: rgba(5, 150, 105, 0.15);
+      --warning: #D97706;
+      --bg: #F4F6F8; /* Matte off-white canvas */
+      --bg-panel: rgba(255, 255, 255, 0.85);
+      --border: rgba(15, 23, 42, 0.08);
+      --border-active: rgba(255, 92, 0, 0.35);
+      --text: #0F172A; /* Sharp Slate-900 */
+      --text-muted: #64748B; /* Slate-500 */
+      --text-dim: #334155; /* Slate-700 */
 
       --font-display: 'Outfit', sans-serif;
       --font-body: 'Inter', sans-serif;
       --font-mono: 'Fira Code', monospace;
       
-      --radius: 6px;
-      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 4px; /* Strict, boxier industrial look */
+      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* Reset & Base styling */
@@ -72,28 +72,28 @@
       font-family: var(--font-body);
       overflow-x: hidden;
       cursor: none;
-      /* Grid background resembling engineering draft paper */
+      /* Grid background mimicking technical draft paper */
       background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.012) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.012) 1px, transparent 1px);
-      background-size: 50px 50px;
+        linear-gradient(rgba(15, 23, 42, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.015) 1px, transparent 1px);
+      background-size: 40px 40px;
     }
 
-    a, button, input, textarea {
+    a, button, input, textarea, select {
       cursor: none;
     }
 
     /* Scrollbar */
     ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: var(--bg);
     }
     ::-webkit-scrollbar-thumb {
-      background: var(--primary-dim);
-      border-radius: 2px;
+      background: rgba(15, 23, 42, 0.1);
+      border-radius: 3px;
       transition: background var(--transition);
     }
     ::-webkit-scrollbar-thumb:hover {
@@ -101,7 +101,7 @@
     }
 
     /* ══════════════════════════════════════════════════════
-       BOOT SEQUENCE SCREEN
+       BOOT SEQUENCE SCREEN (Starts dark, fades into light)
        ══════════════════════════════════════════════════════ */
     #boot-screen {
       position: fixed;
@@ -121,20 +121,22 @@
     }
 
     .boot-header {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--primary);
+      color: #FFF;
       margin-bottom: 2rem;
-      letter-spacing: 0.1em;
-      border-bottom: 1px solid var(--primary-dim);
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
     }
 
     .boot-log {
       height: 250px;
       overflow-y: auto;
       font-size: 0.85rem;
-      color: var(--text-dim);
+      color: rgba(255, 255, 255, 0.6);
       line-height: 1.7;
       margin-bottom: 2rem;
       display: flex;
@@ -145,7 +147,7 @@
     .boot-log-line {
       opacity: 0;
       transform: translateX(-5px);
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      transition: opacity 0.12s ease, transform 0.12s ease;
     }
 
     .boot-log-line.printed {
@@ -154,7 +156,7 @@
     }
 
     .boot-log-line .ok {
-      color: var(--accent);
+      color: var(--primary);
       font-weight: 600;
     }
 
@@ -163,7 +165,7 @@
       justify-content: space-between;
       align-items: center;
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.4);
     }
 
     .boot-cursor::after {
@@ -179,7 +181,7 @@
     }
 
     /* ══════════════════════════════════════════════════════
-       DESKTOP GRID & RETICLE CURSOR
+       DESKTOP & CUSTOM CURSOR
        ══════════════════════════════════════════════════════ */
     #desktop {
       display: none;
@@ -188,12 +190,12 @@
       transition: opacity 1s ease;
     }
 
-    /* Reticle Custom Cursor */
+    /* Reticle Custom Cursor (Dark Slate for Light Theme) */
     #reticle-cursor {
       position: fixed;
-      width: 24px;
-      height: 24px;
-      border: 1px solid var(--primary);
+      width: 20px;
+      height: 20px;
+      border: 1px solid var(--text-muted);
       border-radius: 50%;
       pointer-events: none;
       z-index: 1000000;
@@ -207,67 +209,52 @@
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
       width: 4px; height: 4px;
-      background: var(--primary);
+      background: var(--text-muted);
       border-radius: 50%;
     }
 
-    /* Hairlines for targeting crosshairs */
+    /* Target hairs */
     #reticle-cursor::after {
       content: '';
       position: absolute;
-      inset: -4px;
+      inset: -3px;
       border: 1px solid transparent;
       border-radius: 50%;
-      border-top-color: var(--primary-glow);
-      border-bottom-color: var(--primary-glow);
-      animation: spin 4s linear infinite;
+      border-top-color: var(--primary);
+      border-bottom-color: var(--primary);
+      animation: spin 6s linear infinite;
     }
 
     #reticle-cursor.locked {
-      width: 36px;
-      height: 36px;
-      border-color: var(--accent);
-      background: rgba(16, 185, 129, 0.05);
+      width: 30px;
+      height: 30px;
+      border-color: var(--primary);
+      background: rgba(255, 92, 0, 0.05);
     }
 
     #reticle-cursor.locked::before {
-      background: var(--accent);
+      background: var(--primary);
     }
 
     #reticle-cursor.locked::after {
-      border-top-color: var(--accent-glow);
-      border-bottom-color: var(--accent-glow);
+      border-top-color: var(--primary);
+      border-bottom-color: var(--primary);
     }
 
     @keyframes spin {
       to { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* Scanline effect */
-    .scanlines {
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 240, 255, 0.006) 2px,
-        rgba(0, 240, 255, 0.006) 4px
-      );
-      pointer-events: none;
-      z-index: 99999;
-    }
-
     /* ══════════════════════════════════════════════════════
-       GLASS WINDOW ABSTRACTIONS (OS Style)
+       GLASS WINDOWS & INDUSTRIAL CONSOLE CONTAINERS
        ══════════════════════════════════════════════════════ */
     .os-window {
       background: var(--bg-panel);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 24px -6px rgba(15, 23, 42, 0.04);
       overflow: hidden;
       transition: border-color var(--transition), box-shadow var(--transition);
       position: relative;
@@ -275,37 +262,37 @@
 
     .os-window:hover {
       border-color: var(--border-active);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.05);
+      box-shadow: 0 8px 30px -8px rgba(255, 92, 0, 0.08);
     }
 
     .os-window-header {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(15, 23, 42, 0.02);
       border-bottom: 1px solid var(--border);
-      padding: 0.6rem 1rem;
+      padding: 0.6rem 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    /* OS-style dot controls */
+    /* Dial controls mimicking hardware panels */
     .os-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--text-muted);
-      opacity: 0.4;
+      opacity: 0.3;
     }
-    .os-dot.red { background: #EF4444; opacity: 0.7; }
-    .os-dot.yellow { background: #F59E0B; opacity: 0.7; }
-    .os-dot.green { background: #10B981; opacity: 0.7; }
+    .os-dot.red { background: #E11D48; opacity: 0.8; }
+    .os-dot.yellow { background: #D97706; opacity: 0.8; }
+    .os-dot.green { background: #059669; opacity: 0.8; }
 
     .os-window-title {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       color: var(--text-dim);
-      margin-left: 0.5rem;
-      letter-spacing: 0.05em;
+      margin-left: 0.4rem;
+      letter-spacing: 0.08em;
     }
 
     .os-window-status {
@@ -314,7 +301,8 @@
       font-size: 0.65rem;
       color: var(--primary);
       background: var(--primary-dim);
-      padding: 0.15rem 0.5rem;
+      padding: 0.1rem 0.4rem;
+      border: 1px solid rgba(255, 92, 0, 0.15);
       border-radius: 2px;
     }
 
@@ -325,7 +313,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      background: rgba(3, 7, 18, 0.6);
+      background: rgba(244, 246, 248, 0.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -337,12 +325,13 @@
 
     .nav-brand {
       font-family: var(--font-mono);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      letter-spacing: 0.1em;
     }
 
     .nav-brand .pulse-indicator {
@@ -356,17 +345,17 @@
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
 
     .nav-links a {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-dim);
       text-decoration: none;
-      letter-spacing: 0.05em;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.5rem;
+      border-radius: 2px;
       transition: color var(--transition), background-color var(--transition);
       position: relative;
     }
@@ -388,6 +377,7 @@
 
     #sys-clock {
       color: var(--text-dim);
+      font-weight: 600;
     }
 
     /* Hamburger menu for mobile */
@@ -402,8 +392,8 @@
 
     .nav-hamburger span {
       display: block;
-      width: 18px;
-      height: 1px;
+      width: 16px;
+      height: 1.5px;
       background: var(--text);
       transition: transform var(--transition);
     }
@@ -426,21 +416,22 @@
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--primary);
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       display: block;
       margin-bottom: 0.4rem;
+      font-weight: 600;
     }
 
     .section-title {
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 800;
       color: var(--text);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
     }
 
     .section-line {
-      width: 60px;
+      width: 40px;
       height: 2px;
       background: var(--primary);
       margin-top: 0.8rem;
@@ -462,7 +453,7 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.25;
+      opacity: 0.3;
     }
 
     .hero-container {
@@ -474,26 +465,27 @@
       width: 100%;
     }
 
-    /* Holographic Scanner Reticle */
+    /* Holographic Scanner Reticle (Light Engineering Theme) */
     .identity-core {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 380px;
-      height: 380px;
+      width: 360px;
+      height: 360px;
       margin: 0 auto;
     }
 
     .scanner-photo-wrap {
-      width: 200px;
-      height: 200px;
+      width: 190px;
+      height: 190px;
       border-radius: 50%;
       overflow: hidden;
       border: 1px solid var(--border-active);
-      box-shadow: 0 0 25px var(--primary-dim);
+      box-shadow: 0 4px 25px rgba(15, 23, 42, 0.05);
       position: relative;
       z-index: 3;
+      background: #FFF;
     }
 
     .scanner-photo-wrap img {
@@ -506,85 +498,84 @@
       display: none;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #09132c, #052636);
+      background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--text-muted);
     }
 
-    /* Animated telemetry lines */
+    /* Precision circular lines */
     .tele-ring {
       position: absolute;
       border-radius: 50%;
       border: 1px solid;
-      animation: rotate-ring 12s linear infinite;
+      animation: rotate-ring 15s linear infinite;
     }
 
     .ring-outer {
-      width: 320px; height: 320px;
-      border-color: rgba(0, 240, 255, 0.15);
+      width: 310px; height: 310px;
+      border-color: rgba(15, 23, 42, 0.06);
       border-style: dashed;
       animation-duration: 25s;
     }
 
     .ring-mid {
-      width: 270px; height: 270px;
-      border-color: rgba(16, 185, 129, 0.2);
+      width: 260px; height: 260px;
+      border-color: rgba(255, 92, 0, 0.12);
       animation-direction: reverse;
       animation-duration: 18s;
     }
 
     .ring-inner {
-      width: 234px; height: 234px;
-      border-color: rgba(0, 240, 255, 0.3);
+      width: 224px; height: 224px;
+      border-color: rgba(15, 23, 42, 0.08);
       border-style: solid;
-      border-top-color: transparent;
-      animation-duration: 8s;
+      border-top-color: var(--primary);
+      animation-duration: 9s;
     }
 
     .orbit-particle {
       position: absolute;
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       background: var(--primary);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--primary);
       top: -3px;
       left: 50%;
       transform: translateX(-50%);
     }
 
-    /* HUD coordinate sweeps */
+    /* Conic scanner sweep */
     .hud-laser {
       position: absolute;
-      width: 290px;
-      height: 290px;
+      width: 275px;
+      height: 275px;
       border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--primary-dim), transparent 60%);
+      background: conic-gradient(from 0deg, var(--primary-dim), transparent 50%);
       pointer-events: none;
       animation: laser-sweep 4s linear infinite;
       z-index: 2;
     }
 
-    /* Core floating telemetry labels */
+    /* Precision dials and labels */
     .core-label {
       position: absolute;
       font-family: var(--font-mono);
       font-size: 0.6rem;
       color: var(--text-muted);
-      background: rgba(0, 0, 0, 0.4);
-      padding: 0.15rem 0.4rem;
+      background: rgba(255, 255, 255, 0.85);
+      padding: 0.15rem 0.35rem;
       border: 1px solid var(--border);
       border-radius: 2px;
       white-space: nowrap;
     }
-    .core-label.t { top: 15px; }
-    .core-label.b { bottom: 15px; }
-    .core-label.l { left: -10px; }
-    .core-label.r { right: -10px; }
+    .core-label.t { top: 12px; }
+    .core-label.b { bottom: 12px; }
+    .core-label.l { left: -8px; }
+    .core-label.r { right: -8px; }
 
     @keyframes rotate-ring {
       to { transform: rotate(360deg); }
@@ -593,41 +584,42 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Hero Text & Controls */
+    /* Hero Info Cards */
     .hero-meta {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1rem;
     }
 
     .sys-tag {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--primary);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
+      font-weight: 600;
     }
 
     .hero-name {
       font-family: var(--font-display);
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
       font-weight: 900;
       line-height: 1.05;
       letter-spacing: -0.03em;
+      color: var(--text);
     }
 
     .hero-role-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.03);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
+      padding: 0.35rem 0.7rem;
+      border-radius: var(--radius);
       width: fit-content;
-      margin-top: 0.5rem;
     }
 
     .role-dot {
@@ -635,18 +627,18 @@
       height: 6px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
+      animation: blink 2.5s infinite;
     }
 
     .typewriter-container {
       font-family: var(--font-mono);
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--primary);
       min-height: 1.8rem;
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      margin-top: 0.5rem;
+      font-weight: 500;
     }
 
     .typewriter-cursor {
@@ -655,65 +647,130 @@
     }
 
     .hero-tagline {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-dim);
-      line-height: 1.7;
-      max-width: 480px;
-      border-left: 2px solid var(--primary-glow);
+      line-height: 1.65;
+      max-width: 460px;
+      border-left: 2px solid var(--primary);
       padding-left: 1rem;
-      margin-top: 0.5rem;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
       flex-wrap: wrap;
     }
 
-    /* OS-style technical buttons */
+    /* Technical Teenage Engineering Styled Button */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.4rem;
+      gap: 0.5rem;
+      padding: 0.65rem 1.25rem;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 500;
+      font-size: 0.72rem;
+      font-weight: 600;
       letter-spacing: 0.05em;
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.02);
+      background: #FFFFFF;
       color: var(--text-dim);
       text-decoration: none;
       transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
     }
 
     .btn:hover {
       color: var(--text);
       border-color: var(--primary);
       background: var(--primary-dim);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(255, 92, 0, 0.06);
     }
 
     .btn-accent {
-      border-color: var(--accent);
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #FFFFFF;
     }
 
     .btn-accent:hover {
-      border-color: var(--accent);
-      background: var(--accent-dim);
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+      border-color: #E04F00;
+      background: #E04F00;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(255, 92, 0, 0.15);
     }
 
-    .btn-icon {
-      font-size: 0.8rem;
+    /* Interactive Hardware Parameter Slider UI Widget */
+    .hardware-widget {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      max-width: 460px;
+    }
+
+    .hw-title {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hw-slider-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .hw-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      width: 120px;
+    }
+
+    .hw-slider {
+      flex: 1;
+      height: 3px;
+      -webkit-appearance: none;
+      background: #E2E8F0;
+      outline: none;
+      border-radius: 2px;
+    }
+
+    .hw-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .hw-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.3);
+    }
+
+    .hw-val {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--primary);
+      font-weight: 600;
+      width: 50px;
+      text-align: right;
     }
 
     /* ══════════════════════════════════════════════════════
-       EVOLUTION SECTION
+       EVOLUTION TIMELINE
        ══════════════════════════════════════════════════════ */
     #evolution {
       position: relative;
@@ -729,15 +786,15 @@
     .pipeline-track {
       position: absolute;
       left: 7px; top: 0; bottom: 0;
-      width: 2px;
-      background: rgba(255, 255, 255, 0.05);
+      width: 1px;
+      background: rgba(15, 23, 42, 0.05);
     }
 
     .pipeline-progress {
       position: absolute;
       left: 7px; top: 0;
-      width: 2px;
-      background: linear-gradient(180deg, var(--primary), var(--accent));
+      width: 1px;
+      background: var(--primary);
       height: 0%;
       transition: height 0.5s ease-out;
     }
@@ -745,7 +802,7 @@
     .pipeline-stage {
       position: relative;
       margin-bottom: 4rem;
-      opacity: 0.3;
+      opacity: 0.25;
       transform: translateY(20px);
       transition: opacity 0.5s, transform 0.5s;
     }
@@ -759,60 +816,62 @@
       position: absolute;
       left: -3rem;
       top: 0.5rem;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border-radius: 50%;
       background: var(--bg);
-      border: 2px solid var(--text-muted);
+      border: 1.5px solid var(--text-muted);
       z-index: 2;
-      transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
+      transition: all var(--transition);
     }
 
     .pipeline-stage.active .pipeline-stage-dot {
       border-color: var(--primary);
-      background-color: var(--bg);
-      box-shadow: 0 0 12px var(--primary);
+      background-color: var(--primary);
+      box-shadow: 0 0 10px rgba(255, 92, 0, 0.35);
     }
 
     .pipeline-stage-content {
-      background: rgba(255, 255, 255, 0.01);
+      background: #FFFFFF;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
-      transition: border-color var(--transition);
+      padding: 1.4rem;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
     }
 
     .pipeline-stage.active .pipeline-stage-content {
       border-color: var(--border-active);
-      background: rgba(0, 240, 255, 0.015);
+      box-shadow: 0 4px 16px rgba(255, 92, 0, 0.03);
     }
 
     .stage-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .stage-num {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--primary);
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .stage-title {
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--text);
     }
 
     .stage-sub {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--accent);
       margin-bottom: 0.8rem;
+      font-weight: 500;
     }
 
     .stage-desc {
@@ -827,51 +886,52 @@
     .systems-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2rem;
+      gap: 1.5rem;
       margin-top: 1rem;
     }
 
     .system-module-body {
-      padding: 1.5rem;
+      padding: 1.4rem;
     }
 
     .system-module-tag {
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--primary);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
     }
 
     .system-module-title {
       font-family: var(--font-display);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       color: var(--text);
     }
 
     .system-pkg-list {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.5rem;
     }
 
     .system-pkg-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.02);
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      padding: 0.6rem 1rem;
-      border-radius: 4px;
+      padding: 0.55rem 0.8rem;
+      border-radius: var(--radius);
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      transition: border-color var(--transition), background-color var(--transition);
+      font-size: 0.72rem;
+      transition: all var(--transition);
     }
 
     .system-pkg-item:hover {
-      border-color: var(--primary-glow);
-      background: rgba(0, 240, 255, 0.03);
+      border-color: var(--border-active);
+      background: var(--primary-dim);
     }
 
     .system-pkg-name {
@@ -880,6 +940,7 @@
 
     .system-pkg-status {
       color: var(--accent);
+      font-weight: 600;
     }
 
     /* ══════════════════════════════════════════════════════
@@ -894,13 +955,13 @@
       display: grid;
       grid-template-columns: 1fr 280px;
       gap: 1.5rem;
-      padding: 1.5rem;
+      padding: 1.4rem;
     }
 
     #teleop-canvas-container {
-      background: #020306;
+      background: #FAFBFD; /* Light engineering blueprint grid backdrop */
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: var(--radius);
       height: 320px;
       position: relative;
       overflow: hidden;
@@ -915,19 +976,20 @@
     .teleop-sidebar {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      background: rgba(0, 0, 0, 0.2);
+      gap: 0.8rem;
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: var(--radius);
       padding: 1.2rem;
     }
 
     .teleop-widget-title {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--primary);
+      font-size: 0.72rem;
+      color: var(--text-muted);
       margin-bottom: 0.4rem;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      font-weight: 600;
     }
 
     .teleop-control-group {
@@ -939,13 +1001,14 @@
     .teleop-btn {
       font-family: var(--font-mono);
       font-size: 0.7rem;
-      padding: 0.5rem;
-      background: rgba(255, 255, 255, 0.02);
+      padding: 0.45rem;
+      background: #FFFFFF;
       border: 1px solid var(--border);
       color: var(--text-dim);
-      border-radius: 4px;
+      border-radius: var(--radius);
       transition: all var(--transition);
       text-align: center;
+      font-weight: 500;
     }
 
     .teleop-btn.active {
@@ -959,7 +1022,7 @@
       font-size: 0.7rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.45rem;
       margin-top: auto;
       border-top: 1px solid var(--border);
       padding-top: 0.8rem;
@@ -979,8 +1042,8 @@
     }
 
     .teleop-stat-val.active {
-      color: var(--accent);
-      font-weight: 500;
+      color: var(--primary);
+      font-weight: 600;
     }
 
     /* ══════════════════════════════════════════════════════
@@ -991,20 +1054,21 @@
     }
 
     .terminal-body {
-      background: #020306;
+      background: #FAFBFD;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--accent);
+      font-size: 0.72rem;
+      color: var(--text-dim);
       padding: 1.2rem;
       height: 220px;
       overflow-y: auto;
       line-height: 1.6;
+      border-top: 1px solid rgba(15, 23, 42, 0.04);
     }
 
     .term-line {
       display: flex;
       gap: 0.5rem;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.15rem;
     }
 
     .term-ts {
@@ -1018,14 +1082,16 @@
 
     .term-content.warn {
       color: var(--warning);
+      font-weight: 500;
     }
 
     .term-content.err {
       color: #EF4444;
+      font-weight: 600;
     }
 
     /* ══════════════════════════════════════════════════════
-       SKILLS SECTION
+       SKILLS SECTION (Keycap Modular Tiles)
        ══════════════════════════════════════════════════════ */
     .skills-layout {
       margin-top: 1rem;
@@ -1034,32 +1100,33 @@
     .skills-packages {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+      gap: 0.8rem;
     }
 
     .pkg-card {
-      background: rgba(255, 255, 255, 0.01);
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.8rem 1rem;
+      border-radius: var(--radius);
+      padding: 0.7rem 0.9rem;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       transition: all var(--transition);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
     }
 
     .pkg-card:hover {
       border-color: var(--primary);
       background: var(--primary-dim);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
-      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(255, 92, 0, 0.05);
+      transform: translateY(-1px);
     }
 
     .pkg-icon {
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     }
 
     .pkg-card:hover .pkg-icon {
@@ -1082,26 +1149,26 @@
     }
 
     .roadmap-body {
-      padding: 2rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
       position: relative;
     }
 
     .roadmap-node-container {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
       position: relative;
     }
 
     .roadmap-node-container::before {
       content: '';
       position: absolute;
-      left: 17px;
-      top: 36px;
-      bottom: -32px;
+      left: 15px;
+      top: 32px;
+      bottom: -24px;
       width: 1px;
       background: var(--border);
     }
@@ -1111,56 +1178,57 @@
     }
 
     .roadmap-node-dot {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      background: var(--bg);
-      border: 1px solid var(--border);
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-mono);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       z-index: 2;
-      transition: border-color var(--transition), box-shadow var(--transition);
+      transition: all var(--transition);
     }
 
     .roadmap-node-container.completed .roadmap-node-dot {
       border-color: var(--accent);
       color: var(--accent);
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+      background-color: var(--accent-dim);
     }
 
     .roadmap-node-container.active .roadmap-node-dot {
       border-color: var(--primary);
       color: var(--primary);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+      background-color: var(--primary-dim);
     }
 
     .roadmap-node-content {
-      background: rgba(255, 255, 255, 0.01);
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      padding: 0.9rem 1.2rem;
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
       transition: border-color var(--transition);
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
     }
 
     .roadmap-node-container.completed .roadmap-node-content {
-      border-color: rgba(16, 185, 129, 0.2);
+      border-color: rgba(5, 150, 105, 0.2);
     }
 
     .roadmap-node-container.active .roadmap-node-content {
-      border-color: var(--primary-glow);
+      border-color: var(--border-active);
     }
 
     .roadmap-node-meta h4 {
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text);
     }
@@ -1168,12 +1236,13 @@
     .roadmap-node-meta p {
       font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
     }
 
     .roadmap-node-status {
       font-family: var(--font-mono);
       font-size: 0.7rem;
+      font-weight: 500;
     }
 
     .roadmap-node-container.completed .roadmap-node-status { color: var(--accent); }
@@ -1181,21 +1250,21 @@
     .roadmap-node-container.future .roadmap-node-status { color: var(--text-muted); }
 
     /* ══════════════════════════════════════════════════════
-       PROJECTS (SYSTEMS NETWORK GRAPH)
+       PROJECTS (SYSTEMS NETWORK LAYOUT)
        ══════════════════════════════════════════════════════ */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 1.2rem;
       margin-top: 1rem;
     }
 
     .project-card-body {
-      padding: 1.5rem;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      height: 220px;
+      gap: 0.8rem;
+      height: 210px;
     }
 
     .project-header-row {
@@ -1206,24 +1275,26 @@
 
     .project-title-meta h3 {
       font-family: var(--font-display);
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text);
     }
 
     .project-title-meta p {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--primary);
-      margin-top: 0.2rem;
+      margin-top: 0.15rem;
+      font-weight: 500;
     }
 
     .project-status-badge {
       font-family: var(--font-mono);
       font-size: 0.6rem;
-      padding: 0.15rem 0.4rem;
-      border: 1px solid;
+      padding: 0.1rem 0.35rem;
+      border: 1.5px solid;
       border-radius: 2px;
+      font-weight: 600;
     }
 
     .project-status-badge.deployed { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
@@ -1248,9 +1319,9 @@
     .project-tag-item {
       font-family: var(--font-mono);
       font-size: 0.6rem;
-      background: rgba(255, 255, 255, 0.02);
+      background: #FFFFFF;
       border: 1px solid var(--border);
-      padding: 0.15rem 0.45rem;
+      padding: 0.1rem 0.4rem;
       color: var(--text-muted);
       border-radius: 2px;
     }
@@ -1261,34 +1332,34 @@
     .contact-container {
       display: grid;
       grid-template-columns: 1fr 1.3fr;
-      gap: 3.5rem;
+      gap: 3rem;
       margin-top: 1rem;
     }
 
     .contact-details {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.2rem;
     }
 
     .contact-lead {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       color: var(--text-dim);
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     .channel-list {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.6rem;
     }
 
     .channel-item {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.6rem;
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
       text-decoration: none;
       transition: color var(--transition);
@@ -1299,27 +1370,28 @@
     }
 
     .channel-icon {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: var(--radius);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--primary);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
+      background: #FFFFFF;
     }
 
     .contact-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.9rem;
     }
 
     .form-group-os {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.3rem;
     }
 
     .form-group-os label {
@@ -1327,13 +1399,14 @@
       font-size: 0.65rem;
       color: var(--text-muted);
       letter-spacing: 0.05em;
+      font-weight: 500;
     }
 
     .form-input-os {
-      background: rgba(0, 0, 0, 0.2);
+      background: #FFFFFF;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 0.7rem 0.9rem;
+      padding: 0.65rem 0.8rem;
       font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--text);
@@ -1343,18 +1416,18 @@
 
     .form-input-os:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+      box-shadow: 0 0 8px rgba(255, 92, 0, 0.08);
     }
 
     .form-input-os::placeholder {
-      color: rgba(255, 255, 255, 0.15);
+      color: rgba(15, 23, 42, 0.2);
     }
 
     .form-console {
-      background: #020306;
+      background: #FAFBFD;
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 0.8rem 1rem;
+      padding: 0.7rem 0.9rem;
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--text-muted);
@@ -1368,8 +1441,8 @@
       display: block;
       margin-bottom: 0.15rem;
     }
-    .console-line.success { color: var(--accent); }
-    .console-line.error { color: #EF4444; }
+    .console-line.success { color: var(--accent); font-weight: 500; }
+    .console-line.error { color: #EF4444; font-weight: 600; }
 
     /* ══════════════════════════════════════════════════════
        FOOTER
@@ -1377,7 +1450,7 @@
     footer {
       border-top: 1px solid var(--border);
       padding: 2rem;
-      background: rgba(3, 7, 18, 0.6);
+      background: rgba(255, 255, 255, 0.8);
       text-align: center;
       position: relative;
       z-index: 10;
@@ -1388,7 +1461,7 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.5rem;
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--text-muted);
@@ -1404,17 +1477,17 @@
         text-align: center;
       }
       .identity-core {
-        width: 320px;
-        height: 320px;
+        width: 310px;
+        height: 310px;
       }
       .scanner-photo-wrap {
-        width: 170px;
-        height: 170px;
+        width: 160px;
+        height: 160px;
       }
-      .ring-outer { width: 280px; height: 280px; }
-      .ring-mid { width: 240px; height: 240px; }
-      .ring-inner { width: 200px; height: 200px; }
-      .hud-laser { width: 250px; height: 250px; }
+      .ring-outer { width: 270px; height: 270px; }
+      .ring-mid { width: 230px; height: 230px; }
+      .ring-inner { width: 190px; height: 190px; }
+      .hud-laser { width: 240px; height: 240px; }
       
       .hero-role-badge {
         margin: 0.5rem auto 0;
@@ -1431,6 +1504,9 @@
       }
       .hero-buttons {
         justify-content: center;
+      }
+      .hardware-widget {
+        margin: 1.5rem auto 0;
       }
       .systems-grid {
         grid-template-columns: 1fr;
@@ -1458,7 +1534,7 @@
         display: none;
         position: absolute;
         top: 100%; left: 0; right: 0;
-        background: rgba(3, 7, 18, 0.95);
+        background: rgba(255, 255, 255, 0.98);
         border-bottom: 1px solid var(--border);
         flex-direction: column;
         padding: 1rem;
@@ -1479,15 +1555,15 @@
 
 <body>
 
-  <!-- Scanlines Effect Overlay -->
-  <div class="scanlines"></div>
-
   <!-- ══════════════════════════════════════════════ -->
   <!--  BOOT SEQUENCE SCREEN                          -->
   <!-- ══════════════════════════════════════════════ -->
   <div id="boot-screen">
     <div class="boot-container">
-      <div class="boot-header">ATHUL_OS v4.0.0</div>
+      <div class="boot-header">
+        <span>ATHUL_OS v4.0.0</span>
+        <span>BIOS_SYS</span>
+      </div>
       <div class="boot-log" id="bootLog">
         <!-- Lines appended dynamically via JavaScript -->
       </div>
@@ -1580,6 +1656,24 @@
             <a href="resume.pdf" download class="btn btn-accent">
               <span class="btn-icon">↓</span> GET TECHNICAL RESUME
             </a>
+          </div>
+
+          <!-- Unique Teenage Engineering Interactive Parameters Widget -->
+          <div class="hardware-widget">
+            <div class="hw-title">
+              <span>HARDWARE_PARAMETERS_CONTROL</span>
+              <span>v4.0</span>
+            </div>
+            <div class="hw-slider-group">
+              <span class="hw-label">PROCESSOR_CLOCK:</span>
+              <input type="range" id="param-speed" class="hw-slider" min="100" max="2000" step="50" value="800" />
+              <span class="hw-val" id="val-speed">800 MHz</span>
+            </div>
+            <div class="hw-slider-group">
+              <span class="hw-label">GRID_LINE_DENSITY:</span>
+              <input type="range" id="param-grid" class="hw-slider" min="20" max="80" step="5" value="40" />
+              <span class="hw-val" id="val-grid">40px</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2178,7 +2272,7 @@
             <div class="roadmap-node-dot">02</div>
             <div class="roadmap-node-content">
               <div class="roadmap-node-meta">
-                <h4>Whole-Body control</h4>
+                <h4>Whole-Body Control</h4>
                 <p>Designing dynamic stability algorithms, balance constraints, and torque controls.</p>
               </div>
               <span class="roadmap-node-status">UP NEXT</span>
@@ -2336,7 +2430,7 @@
         { text: ' ', delay: 300 },
         { text: '[  0.034] Booting OS kernel... <span class="ok">OK</span>', delay: 450 },
         { text: '[  0.180] Scanning system modules... 12 packages found.', delay: 650 },
-        { text: '[  0.320] Launching ROS2 Humble hawksbill... <span class="ok">OK</span>', delay: 850 },
+        { text: '[  0.320] Launching ROS2 Humble Hawksbill... <span class="ok">OK</span>', delay: 850 },
         { text: '[  0.640] Spawning node: /move_group... <span class="ok">OK</span>', delay: 1050 },
         { text: '[  0.920] Loading manipulation stack (MoveIt2)... <span class="ok">OK</span>', delay: 1350 },
         { text: '[  1.210] Loading teleoperation stack (LeRobot)... <span class="ok">OK</span>', delay: 1550 },
@@ -2419,7 +2513,7 @@
       updateCursor();
 
       // Expand reticle target lock on hoverable items
-      const hoverTargets = document.querySelectorAll('a, button, input, textarea, .pkg-card, .pipeline-stage-content');
+      const hoverTargets = document.querySelectorAll('a, button, input, textarea, .pkg-card, .pipeline-stage-content, .hw-slider');
       hoverTargets.forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('locked'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('locked'));
@@ -2490,9 +2584,9 @@
       renderer.setSize(W, H);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      // Holographic cyber blue materials
-      const wireMaterial = new THREE.LineBasicMaterial({ color: 0x00F0FF, transparent: true, opacity: 0.35 });
-      const jointMaterial = new THREE.MeshBasicMaterial({ color: 0x10B981, wireframe: true, transparent: true, opacity: 0.2 });
+      // Industrial theme wireframe steel-gray with orange highlights
+      const wireMaterial = new THREE.LineBasicMaterial({ color: 0x64748B, transparent: true, opacity: 0.25 });
+      const jointMaterial = new THREE.MeshBasicMaterial({ color: 0xFF5C00, wireframe: true, transparent: true, opacity: 0.15 });
 
       // Helper function to build segment
       function createSegment(radius, length) {
@@ -2520,7 +2614,7 @@
       const wrist = createSegment(0.15, 0.8);
 
       // Assemble pivots hierarchically
-      base.group.position.set(-2, -1, 0);
+      base.group.position.set(-1.8, -0.8, 0);
       scene.add(base.group);
 
       shoulder.group.position.y = base.length;
@@ -2534,8 +2628,10 @@
 
       // Animation Loop
       let t = 0;
+      let animSpeed = 0.005; // Controlled dynamically by widget slider
+      
       function renderArm() {
-        t += 0.006;
+        t += animSpeed;
         
         // Continuous organic kinematic oscillation
         base.group.rotation.y = Math.sin(t * 0.4) * 0.4;
@@ -2548,6 +2644,16 @@
         requestAnimationFrame(renderArm);
       }
       renderArm();
+
+      // Connect slider to animation speed
+      const sliderSpeed = document.getElementById('param-speed');
+      const valSpeed = document.getElementById('val-speed');
+      sliderSpeed.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        valSpeed.textContent = `${val} MHz`;
+        // Interpolate slider value to rotation speed increment
+        animSpeed = 0.001 + (val / 2000) * 0.01;
+      });
 
       // Resize listener
       window.addEventListener('resize', () => {
@@ -2622,7 +2728,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Technical Grid Background
-        ctx.strokeStyle = 'rgba(0, 240, 255, 0.03)';
+        ctx.strokeStyle = 'rgba(15, 23, 42, 0.025)';
         ctx.lineWidth = 1;
         const spacing = 30;
         for (let x = 0; x < canvas.width; x += spacing) {
@@ -2671,8 +2777,8 @@
         ctx.beginPath();
         ctx.moveTo(canvas.width * 0.25, canvas.height * 0.65);
         ctx.bezierCurveTo(canvas.width * 0.4, canvas.height * 0.45, canvas.width * 0.6, canvas.height * 0.45, canvas.width * 0.75, canvas.height * 0.65);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(15, 23, 42, 0.05)';
+        ctx.lineWidth = 1.5;
         ctx.stroke();
 
         // Draw moving packet particles
@@ -2693,19 +2799,16 @@
           const y = (1-t)**3 * p.y + 3*(1-t)**2 * t * cp1y + 3*(1-t)*t**2 * cp2y + t**3 * p.ty;
 
           ctx.beginPath();
-          ctx.arc(x, y, 3, 0, Math.PI * 2);
-          ctx.fillStyle = highRate ? '#10B981' : '#00F0FF';
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = ctx.fillStyle;
+          ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = highRate ? '#059669' : '#FF5C00';
           ctx.fill();
-          ctx.shadowBlur = 0; // Reset shadow
         }
 
-        // Draw Arm 1 (Leader)
-        drawArm(canvas.width * 0.25, canvas.height * 0.8, leaderJoints, 'LEADER ARM', '#00F0FF');
+        // Draw Arm 1 (Leader - Deep Cyan)
+        drawArm(canvas.width * 0.25, canvas.height * 0.8, leaderJoints, 'LEADER ARM', '#008299');
         
-        // Draw Arm 2 (Follower)
-        drawArm(canvas.width * 0.75, canvas.height * 0.8, followerJoints, 'FOLLOWER ARM', '#10B981');
+        // Draw Arm 2 (Follower - Kuka/Industrial Orange)
+        drawArm(canvas.width * 0.75, canvas.height * 0.8, followerJoints, 'FOLLOWER ARM', '#FF5C00');
       }
 
       function drawArm(baseX, baseY, joints, label, color) {
@@ -2728,7 +2831,7 @@
         const tipY = wristY + Math.sin(theta3) * len3;
 
         // Draw Base Structure
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.strokeStyle = 'rgba(15, 23, 42, 0.08)';
         ctx.lineWidth = 6;
         ctx.beginPath();
         ctx.moveTo(baseX - 30, baseY);
@@ -2752,9 +2855,9 @@
         ctx.stroke();
 
         // Draw Joints nodes
-        ctx.fillStyle = '#050811';
+        ctx.fillStyle = '#FFFFFF';
         ctx.strokeStyle = color;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2.5;
         const jointsNodes = [[shoulderX, shoulderY], [elbowX, elbowY], [wristX, wristY]];
         jointsNodes.forEach(node => {
           ctx.beginPath();
@@ -2770,11 +2873,11 @@
         ctx.fill();
 
         // Draw Labels
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.font = '500 8px "Fira Code", monospace';
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
+        ctx.font = '600 8px "Fira Code", monospace';
         ctx.fillText(label, baseX - 30, baseY + 15);
 
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.4)';
         ctx.fillText(`J0: ${joints[0].toFixed(2)} rad`, baseX - 30, baseY - 120);
         ctx.fillText(`J1: ${joints[1].toFixed(2)} rad`, baseX - 30, baseY - 110);
         ctx.fillText(`J2: ${joints[2].toFixed(2)} rad`, baseX - 30, baseY - 100);
@@ -2952,9 +3055,10 @@
         .fromTo('.hero-name', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.5')
         .fromTo('.hero-role-badge', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.4 }, '-=0.3')
         .fromTo('.hero-tagline', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, '-=0.2')
-        .fromTo('.hero-buttons', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.2');
+        .fromTo('.hero-buttons', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.2')
+        .fromTo('.hardware-widget', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.1');
 
-      // Scroll sections taglines
+      // Scroll sections title animations
       gsap.utils.toArray('.section-title').forEach(title => {
         gsap.fromTo(title, 
           { opacity: 0, x: -20 },
@@ -3042,6 +3146,15 @@
         });
       });
     }
+
+    // Connect density slider to grid stylesheet resolution
+    const sliderGrid = document.getElementById('param-grid');
+    const valGrid = document.getElementById('val-grid');
+    sliderGrid.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      valGrid.textContent = `${val}px`;
+      document.body.style.backgroundSize = `${val}px ${val}px`;
+    });
 
   </script>
 </body>
