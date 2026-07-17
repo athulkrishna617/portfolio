@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap"
     rel="stylesheet" />
 
   <!-- Scripts -->
@@ -26,31 +26,28 @@
 
   <style>
     /* ══════════════════════════════════════════════════════
-       ATHUL_OS v4.0 — MINIMAL LIGHT INDUSTRIAL STYLE SHEET
+       ATHUL_OS v4.0 — SCI-FI HUD CANVAS DESIGN SYSTEM
        ══════════════════════════════════════════════════════ */
 
     :root {
-      --primary: #FF5C00; /* Teenage Engineering Industrial Orange */
-      --primary-dim: rgba(255, 92, 0, 0.06);
-      --primary-glow: rgba(255, 92, 0, 0.15);
-      --accent: #059669; /* Emerald Green */
-      --accent-dim: rgba(5, 150, 105, 0.06);
-      --accent-glow: rgba(5, 150, 105, 0.15);
-      --warning: #D97706;
-      --bg: #F4F6F8; /* Matte off-white canvas */
-      --bg-panel: rgba(255, 255, 255, 0.85);
-      --border: rgba(15, 23, 42, 0.08);
-      --border-active: rgba(255, 92, 0, 0.35);
-      --text: #0F172A; /* Sharp Slate-900 */
-      --text-muted: #64748B; /* Slate-500 */
-      --text-dim: #334155; /* Slate-700 */
-
-      --font-display: 'Outfit', sans-serif;
-      --font-body: 'Inter', sans-serif;
+      --bg: #050a14; /* Deep Space Black */
+      --bg-panel: rgba(10, 22, 40, 0.75); /* Futuristic dark blue panel */
+      --primary: #00d4ff; /* Electric Cyan */
+      --primary-dim: rgba(0, 212, 255, 0.08);
+      --primary-glow: rgba(0, 212, 255, 0.25);
+      --accent: #00ff88; /* Neon Green */
+      --accent-dim: rgba(0, 255, 136, 0.08);
+      --accent-glow: rgba(0, 255, 136, 0.25);
+      --warning: #f59e0b; /* Amber */
+      --text: #e2f4ff; /* Ice White */
+      --text-muted: #4a7a9b; /* Dimmed Cyan Slate */
+      
+      --font-display: 'Orbitron', sans-serif;
+      --font-body: 'Share Tech Mono', monospace;
       --font-mono: 'Fira Code', monospace;
       
-      --radius: 4px; /* Strict, boxier industrial look */
-      --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 2px; /* Sharp industrial corners */
+      --transition: 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     /* Reset & Base styling */
@@ -72,11 +69,20 @@
       font-family: var(--font-body);
       overflow-x: hidden;
       cursor: none;
-      /* Grid background mimicking technical draft paper */
-      background-image: 
-        linear-gradient(rgba(15, 23, 42, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 23, 42, 0.015) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-image: radial-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Horizontal Scanline Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+      background-size: 100% 4px;
+      z-index: 99999;
+      pointer-events: none;
+      opacity: 0.4;
     }
 
     a, button, input, textarea, select {
@@ -90,23 +96,24 @@
     }
     ::-webkit-scrollbar-track {
       background: var(--bg);
+      border-left: 1px solid rgba(0, 212, 255, 0.1);
     }
     ::-webkit-scrollbar-thumb {
-      background: rgba(15, 23, 42, 0.1);
+      background: rgba(0, 212, 255, 0.3);
       border-radius: 3px;
-      transition: background var(--transition);
     }
     ::-webkit-scrollbar-thumb:hover {
       background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
     }
 
     /* ══════════════════════════════════════════════════════
-       BOOT SEQUENCE SCREEN (Starts dark, fades into light)
+       BOOT SEQUENCE SCREEN
        ══════════════════════════════════════════════════════ */
     #boot-screen {
       position: fixed;
       inset: 0;
-      background: #000;
+      background: #02050a;
       z-index: 999999;
       display: flex;
       flex-direction: column;
@@ -117,16 +124,35 @@
 
     .boot-container {
       width: min(700px, 90vw);
-      font-family: var(--font-mono);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      background: rgba(10, 22, 40, 0.95);
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .boot-container::before {
+      content: "";
+      position: absolute;
+      top: -2px; left: -2px; width: 10px; height: 10px;
+      border-top: 2px solid var(--primary);
+      border-left: 2px solid var(--primary);
+    }
+    .boot-container::after {
+      content: "";
+      position: absolute;
+      bottom: -2px; right: -2px; width: 10px; height: 10px;
+      border-bottom: 2px solid var(--primary);
+      border-right: 2px solid var(--primary);
     }
 
     .boot-header {
-      font-size: 1.1rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
       font-weight: 700;
-      color: #FFF;
-      margin-bottom: 2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
       letter-spacing: 0.15em;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px dashed rgba(0, 212, 255, 0.2);
       padding-bottom: 0.5rem;
       display: flex;
       justify-content: space-between;
@@ -135,19 +161,20 @@
     .boot-log {
       height: 250px;
       overflow-y: auto;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
-      line-height: 1.7;
-      margin-bottom: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.25rem;
     }
 
     .boot-log-line {
       opacity: 0;
       transform: translateX(-5px);
-      transition: opacity 0.12s ease, transform 0.12s ease;
+      transition: opacity 0.1s ease, transform 0.1s ease;
     }
 
     .boot-log-line.printed {
@@ -156,8 +183,9 @@
     }
 
     .boot-log-line .ok {
-      color: var(--primary);
+      color: var(--accent);
       font-weight: 600;
+      text-shadow: 0 0 5px var(--accent-glow);
     }
 
     .boot-footer {
@@ -165,37 +193,33 @@
       justify-content: space-between;
       align-items: center;
       font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.4);
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(0, 212, 255, 0.2);
+      padding-top: 0.8rem;
     }
 
     .boot-cursor::after {
       content: '█';
       animation: blink 0.8s step-end infinite;
       color: var(--primary);
-      margin-left: 3px;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+      margin-left: 5px;
     }
 
     /* ══════════════════════════════════════════════════════
-       DESKTOP & CUSTOM CURSOR
+       DESKTOP & CUSTOM RETICLE CURSOR
        ══════════════════════════════════════════════════════ */
     #desktop {
       display: none;
       min-height: 100vh;
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 0.8s ease;
     }
 
-    /* Reticle Custom Cursor (Dark Slate for Light Theme) */
     #reticle-cursor {
       position: fixed;
-      width: 20px;
-      height: 20px;
-      border: 1px solid var(--text-muted);
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--primary-glow);
       border-radius: 50%;
       pointer-events: none;
       z-index: 1000000;
@@ -209,31 +233,32 @@
       left: 50%; top: 50%;
       transform: translate(-50%, -50%);
       width: 4px; height: 4px;
-      background: var(--text-muted);
+      background: var(--primary);
       border-radius: 50%;
+      box-shadow: 0 0 5px var(--primary);
     }
 
-    /* Target hairs */
     #reticle-cursor::after {
       content: '';
       position: absolute;
-      inset: -3px;
-      border: 1px solid transparent;
+      inset: -4px;
+      border: 1px dashed transparent;
       border-radius: 50%;
-      border-top-color: var(--primary);
-      border-bottom-color: var(--primary);
-      animation: spin 6s linear infinite;
+      border-top-color: var(--accent);
+      border-bottom-color: var(--accent);
+      animation: spin-clockwise 8s linear infinite;
     }
 
     #reticle-cursor.locked {
-      width: 30px;
-      height: 30px;
-      border-color: var(--primary);
-      background: rgba(255, 92, 0, 0.05);
+      width: 36px;
+      height: 36px;
+      border-color: var(--accent);
+      background: rgba(0, 255, 136, 0.05);
     }
 
     #reticle-cursor.locked::before {
-      background: var(--primary);
+      background: var(--accent);
+      box-shadow: 0 0 5px var(--accent);
     }
 
     #reticle-cursor.locked::after {
@@ -241,69 +266,73 @@
       border-bottom-color: var(--primary);
     }
 
-    @keyframes spin {
-      to { transform: translate(-50%, -50%) rotate(360deg); }
+    @keyframes spin-clockwise {
+      to { transform: rotate(360deg); }
     }
 
     /* ══════════════════════════════════════════════════════
-       GLASS WINDOWS & INDUSTRIAL CONSOLE CONTAINERS
+       HUD PANEL WINDOWS
        ══════════════════════════════════════════════════════ */
     .os-window {
       background: var(--bg-panel);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       border-radius: var(--radius);
-      box-shadow: 0 4px 24px -6px rgba(15, 23, 42, 0.04);
       overflow: hidden;
       transition: border-color var(--transition), box-shadow var(--transition);
       position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .os-window::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      opacity: 0.5;
     }
 
     .os-window:hover {
-      border-color: var(--border-active);
-      box-shadow: 0 8px 30px -8px rgba(255, 92, 0, 0.08);
+      border-color: rgba(0, 212, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
     }
 
     .os-window-header {
-      background: rgba(15, 23, 42, 0.02);
-      border-bottom: 1px solid var(--border);
+      background: rgba(0, 212, 255, 0.03);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.15);
       padding: 0.6rem 0.9rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    /* Dial controls mimicking hardware panels */
     .os-dot {
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: var(--text-muted);
-      opacity: 0.3;
+      opacity: 0.4;
     }
-    .os-dot.red { background: #E11D48; opacity: 0.8; }
-    .os-dot.yellow { background: #D97706; opacity: 0.8; }
-    .os-dot.green { background: #059669; opacity: 0.8; }
+    .os-dot.red { background: #ef4444; opacity: 0.8; }
+    .os-dot.yellow { background: #f59e0b; opacity: 0.8; }
+    .os-dot.green { background: #10b981; opacity: 0.8; }
 
     .os-window-title {
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
       font-size: 0.72rem;
       font-weight: 500;
-      color: var(--text-dim);
+      color: var(--primary);
       margin-left: 0.4rem;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
     }
 
     .os-window-status {
       margin-left: auto;
-      font-family: var(--font-mono);
+      font-family: var(--font-body);
       font-size: 0.65rem;
-      color: var(--primary);
-      background: var(--primary-dim);
+      color: var(--accent);
+      background: var(--accent-dim);
       padding: 0.1rem 0.4rem;
-      border: 1px solid rgba(255, 92, 0, 0.15);
-      border-radius: 2px;
+      border: 1px solid rgba(0, 255, 136, 0.2);
     }
 
     /* ══════════════════════════════════════════════════════
@@ -313,10 +342,10 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 1000;
-      background: rgba(244, 246, 248, 0.8);
+      background: rgba(5, 10, 20, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(0, 212, 255, 0.15);
       padding: 0.8rem 2rem;
       display: flex;
       align-items: center;
@@ -324,78 +353,103 @@
     }
 
     .nav-brand {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--text);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
     }
 
-    .nav-brand .pulse-indicator {
-      width: 6px;
-      height: 6px;
+    .nav-brand span.cursor {
+      display: inline-block;
+      width: 8px;
+      height: 15px;
       background: var(--primary);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--primary);
-      animation: blink 2s infinite;
+      animation: blink 1s step-end infinite;
+      box-shadow: 0 0 5px var(--primary);
     }
 
     .nav-links {
       display: flex;
-      gap: 1.2rem;
+      gap: 1.5rem;
+      list-style: none;
     }
 
     .nav-links a {
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
       font-size: 0.72rem;
-      color: var(--text-dim);
+      font-weight: 500;
+      color: var(--text-muted);
       text-decoration: none;
-      letter-spacing: 0.08em;
-      padding: 0.25rem 0.5rem;
-      border-radius: 2px;
-      transition: color var(--transition), background-color var(--transition);
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.6rem;
+      transition: color var(--transition), text-shadow var(--transition);
       position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0; width: 0; height: 1px;
+      background: var(--primary);
+      transition: width var(--transition);
+      box-shadow: 0 0 5px var(--primary);
     }
 
     .nav-links a:hover,
     .nav-links a.active {
       color: var(--primary);
-      background: var(--primary-dim);
+      text-shadow: 0 0 5px var(--primary-glow);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
     }
 
     .nav-system-status {
       display: flex;
       align-items: center;
       gap: 1.2rem;
-      font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--text-muted);
+      border-left: 1px solid rgba(0, 212, 255, 0.15);
+      padding-left: 1.2rem;
     }
 
     #sys-clock {
-      color: var(--text-dim);
+      color: var(--accent);
       font-weight: 600;
+      text-shadow: 0 0 5px var(--accent-glow);
     }
 
-    /* Hamburger menu for mobile */
     .nav-hamburger {
       display: none;
       flex-direction: column;
       gap: 4px;
       background: none;
       border: none;
-      cursor: none;
     }
 
     .nav-hamburger span {
       display: block;
-      width: 16px;
+      width: 18px;
       height: 1.5px;
-      background: var(--text);
-      transition: transform var(--transition);
+      background: var(--primary);
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    /* Hamburger open transformation */
+    .nav-hamburger.open span:nth-child(1) {
+      transform: translateY(5.5px) rotate(45deg);
+    }
+    .nav-hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-hamburger.open span:nth-child(3) {
+      transform: translateY(-5.5px) rotate(-45deg);
     }
 
     /* ══════════════════════════════════════════════════════
@@ -410,16 +464,17 @@
 
     .section-header {
       margin-bottom: 3.5rem;
+      position: relative;
     }
 
     .section-tag {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--primary);
-      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.25em;
       display: block;
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       font-weight: 600;
+      text-shadow: 0 0 5px var(--accent-glow);
     }
 
     .section-title {
@@ -427,25 +482,51 @@
       font-size: 1.8rem;
       font-weight: 800;
       color: var(--text);
-      letter-spacing: -0.01em;
+      letter-spacing: 0.05em;
+    }
+
+    .hud-bracket {
+      color: var(--primary);
+      text-shadow: 0 0 5px var(--primary-glow);
     }
 
     .section-line {
-      width: 40px;
-      height: 2px;
+      width: 60px;
+      height: 1px;
       background: var(--primary);
       margin-top: 0.8rem;
+      box-shadow: 0 0 5px var(--primary);
+    }
+
+    /* Corner Bracket Overlay Styles */
+    .hud-corner-bl, .hud-corner-tr {
+      position: absolute;
+      pointer-events: none;
+      width: 16px; height: 16px;
+      border-color: var(--primary);
+      border-style: solid;
+      opacity: 0.5;
+    }
+    .hud-corner-tr {
+      top: 0; right: 0;
+      border-width: 1px 1px 0 0;
+    }
+    .hud-corner-bl {
+      bottom: 0; left: 0;
+      border-width: 0 0 1px 1px;
     }
 
     /* ══════════════════════════════════════════════════════
-       HERO SECTION — ATHUL_OS CORE
+       HERO SECTION — DYNAMIC HUD CORE
        ══════════════════════════════════════════════════════ */
     #hero {
-      min-height: 95vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-top: 7rem;
+      padding-top: 6rem;
+      position: relative;
+      overflow: hidden;
     }
 
     #threeCanvas {
@@ -453,42 +534,144 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.3;
     }
 
     .hero-container {
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1fr 1.2fr;
       gap: 4rem;
       align-items: center;
       z-index: 10;
       width: 100%;
+      position: relative;
     }
 
-    /* Holographic Scanner Reticle (Light Engineering Theme) */
+    /* HUD Corner Overlays */
+    .hud-frame-left {
+      position: absolute;
+      top: 20px; left: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--primary);
+      border-left: 1px solid var(--primary);
+      padding: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .hud-frame-right {
+      position: absolute;
+      top: 20px; right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    /* Radar Sweep Graphic */
+    .radar-sweep-container {
+      width: 60px;
+      height: 60px;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .radar-sweep-container::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: conic-gradient(from 0deg, var(--primary-dim), transparent 60%);
+      border-radius: 50%;
+      animation: spin-clockwise 4s linear infinite;
+    }
+
+    .radar-sweep-cross {
+      position: absolute;
+      inset: 0;
+    }
+    .radar-sweep-cross::before, .radar-sweep-cross::after {
+      content: "";
+      position: absolute;
+      background: rgba(0, 212, 255, 0.15);
+    }
+    .radar-sweep-cross::before {
+      top: 50%; left: 0; width: 100%; height: 1px;
+    }
+    .radar-sweep-cross::after {
+      left: 50%; top: 0; width: 1px; height: 100%;
+    }
+
+    /* Left Side: Photo wrapper inside rotating ring */
     .identity-core {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 360px;
-      height: 360px;
+      width: 320px;
+      height: 320px;
       margin: 0 auto;
     }
 
-    .scanner-photo-wrap {
-      width: 190px;
-      height: 190px;
+    .avatar-ring-outer {
+      position: absolute;
+      inset: 0;
+      border: 1px dashed rgba(0, 212, 255, 0.2);
       border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid var(--border-active);
-      box-shadow: 0 4px 25px rgba(15, 23, 42, 0.05);
-      position: relative;
-      z-index: 3;
-      background: #FFF;
+      animation: spin-clockwise 25s linear infinite;
     }
 
-    .scanner-photo-wrap img {
+    .avatar-ring-inner {
+      position: absolute;
+      inset: 20px;
+      border: 1.5px solid transparent;
+      border-top-color: var(--primary);
+      border-bottom-color: var(--primary);
+      border-radius: 50%;
+      animation: spin-clockwise 12s linear infinite reverse;
+    }
+
+    .avatar-ring-inner::after {
+      content: "";
+      position: absolute;
+      top: 5px; left: 50%; width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .scanner-photo-wrap {
+      width: 180px;
+      height: 180px;
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hex-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.25));
+    }
+
+    .hex-photo-clip {
+      width: 140px;
+      height: 140px;
+      clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-panel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hex-photo-clip img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -498,104 +681,43 @@
       display: none;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      color: var(--text-muted);
+      color: var(--primary);
     }
 
-    /* Precision circular lines */
-    .tele-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid;
-      animation: rotate-ring 15s linear infinite;
-    }
-
-    .ring-outer {
-      width: 310px; height: 310px;
-      border-color: rgba(15, 23, 42, 0.06);
-      border-style: dashed;
-      animation-duration: 25s;
-    }
-
-    .ring-mid {
-      width: 260px; height: 260px;
-      border-color: rgba(255, 92, 0, 0.12);
-      animation-direction: reverse;
-      animation-duration: 18s;
-    }
-
-    .ring-inner {
-      width: 224px; height: 224px;
-      border-color: rgba(15, 23, 42, 0.08);
-      border-style: solid;
-      border-top-color: var(--primary);
-      animation-duration: 9s;
-    }
-
-    .orbit-particle {
-      position: absolute;
-      width: 5px;
-      height: 5px;
-      background: var(--primary);
-      border-radius: 50%;
-      top: -3px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* Conic scanner sweep */
-    .hud-laser {
-      position: absolute;
-      width: 275px;
-      height: 275px;
-      border-radius: 50%;
-      background: conic-gradient(from 0deg, var(--primary-dim), transparent 50%);
-      pointer-events: none;
-      animation: laser-sweep 4s linear infinite;
-      z-index: 2;
-    }
-
-    /* Precision dials and labels */
     .core-label {
       position: absolute;
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.62rem;
       color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.85);
-      padding: 0.15rem 0.35rem;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      background: rgba(5, 10, 20, 0.9);
+      padding: 0.15rem 0.4rem;
       border-radius: 2px;
       white-space: nowrap;
     }
-    .core-label.t { top: 12px; }
-    .core-label.b { bottom: 12px; }
-    .core-label.l { left: -8px; }
-    .core-label.r { right: -8px; }
+    .core-label.t { top: -10px; }
+    .core-label.b { bottom: -10px; }
+    .core-label.l { left: -30px; }
+    .core-label.r { right: -30px; }
 
-    @keyframes rotate-ring {
-      to { transform: rotate(360deg); }
-    }
-    @keyframes laser-sweep {
-      to { transform: rotate(360deg); }
-    }
-
-    /* Hero Info Cards */
+    /* Right Side: Meta Identity Card */
     .hero-meta {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
     .sys-tag {
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--primary);
-      letter-spacing: 0.18em;
+      color: var(--accent);
+      letter-spacing: 0.15em;
       font-weight: 600;
     }
 
@@ -603,23 +725,24 @@
       font-family: var(--font-display);
       font-size: clamp(2.2rem, 4.5vw, 3.6rem);
       font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
+      line-height: 1.1;
+      letter-spacing: 0.05em;
       color: var(--text);
+      text-shadow: 0 0 10px rgba(226, 244, 255, 0.1);
     }
 
     .hero-role-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-family: var(--font-mono);
       font-size: 0.8rem;
-      color: var(--text-dim);
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      padding: 0.35rem 0.7rem;
-      border-radius: var(--radius);
+      color: var(--text);
+      background: var(--primary-dim);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      padding: 0.35rem 0.8rem;
       width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .role-dot {
@@ -627,11 +750,11 @@
       height: 6px;
       border-radius: 50%;
       background: var(--accent);
-      animation: blink 2.5s infinite;
+      box-shadow: 0 0 8px var(--accent);
+      animation: blink 2s infinite;
     }
 
     .typewriter-container {
-      font-family: var(--font-mono);
       font-size: 0.95rem;
       color: var(--primary);
       min-height: 1.8rem;
@@ -639,6 +762,7 @@
       align-items: center;
       gap: 0.4rem;
       font-weight: 500;
+      text-shadow: 0 0 5px var(--primary-glow);
     }
 
     .typewriter-cursor {
@@ -647,80 +771,93 @@
     }
 
     .hero-tagline {
-      font-size: 0.92rem;
-      color: var(--text-dim);
-      line-height: 1.65;
-      max-width: 460px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 480px;
       border-left: 2px solid var(--primary);
       padding-left: 1rem;
     }
 
     .hero-buttons {
       display: flex;
-      gap: 0.8rem;
+      gap: 1rem;
       margin-top: 0.5rem;
       flex-wrap: wrap;
     }
 
-    /* Technical Teenage Engineering Styled Button */
+    /* Sci-Fi HUD styled Button */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
+      gap: 0.6rem;
+      padding: 0.65rem 1.4rem;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: #FFFFFF;
-      color: var(--text-dim);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      background: transparent;
+      color: var(--primary);
       text-decoration: none;
       transition: all var(--transition);
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
     }
 
     .btn:hover {
-      color: var(--text);
+      color: #050a14;
+      background: var(--primary);
       border-color: var(--primary);
-      background: var(--primary-dim);
-      box-shadow: 0 4px 12px rgba(255, 92, 0, 0.06);
+      box-shadow: 0 0 15px var(--primary-glow);
     }
 
     .btn-accent {
-      border-color: var(--primary);
-      background: var(--primary);
-      color: #FFFFFF;
+      border-color: rgba(0, 255, 136, 0.3);
+      color: var(--accent);
     }
 
     .btn-accent:hover {
-      border-color: #E04F00;
-      background: #E04F00;
-      color: #FFFFFF;
-      box-shadow: 0 4px 12px rgba(255, 92, 0, 0.15);
+      color: #050a14;
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 15px var(--accent-glow);
     }
 
-    /* Interactive Hardware Parameter Slider UI Widget */
+    /* Interactive parameter slider UI widget */
     .hardware-widget {
       margin-top: 1.5rem;
-      padding: 1rem;
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      padding: 1.2rem;
+      background: rgba(10, 22, 40, 0.5);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-      max-width: 460px;
+      max-width: 480px;
     }
 
     .hw-title {
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
       font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
+      color: var(--primary);
+      letter-spacing: 0.1em;
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px dashed rgba(0, 212, 255, 0.15);
+      padding-bottom: 0.4rem;
     }
 
     .hw-slider-group {
@@ -731,28 +868,27 @@
     }
 
     .hw-label {
-      font-family: var(--font-mono);
       font-size: 0.7rem;
-      color: var(--text-dim);
-      width: 120px;
+      color: var(--text-muted);
+      width: 140px;
     }
 
     .hw-slider {
       flex: 1;
-      height: 3px;
+      height: 2px;
       -webkit-appearance: none;
-      background: #E2E8F0;
+      background: rgba(0, 212, 255, 0.1);
       outline: none;
-      border-radius: 2px;
     }
 
     .hw-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       background: var(--primary);
       border-radius: 50%;
       cursor: pointer;
+      box-shadow: 0 0 5px var(--primary);
       transition: transform 0.1s;
     }
 
@@ -761,153 +897,175 @@
     }
 
     .hw-val {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--primary);
+      font-size: 0.72rem;
+      color: var(--accent);
       font-weight: 600;
-      width: 50px;
+      width: 60px;
       text-align: right;
     }
 
-    /* ══════════════════════════════════════════════════════
-       EVOLUTION TIMELINE
-       ══════════════════════════════════════════════════════ */
-    #evolution {
-      position: relative;
-    }
-
-    .evolution-pipeline {
-      position: relative;
-      max-width: 800px;
-      margin: 2rem auto 0;
-      padding-left: 3rem;
-    }
-
-    .pipeline-track {
+    /* Scroll Indicator */
+    .scroll-indicator {
       position: absolute;
-      left: 7px; top: 0; bottom: 0;
-      width: 1px;
-      background: rgba(15, 23, 42, 0.05);
-    }
-
-    .pipeline-progress {
-      position: absolute;
-      left: 7px; top: 0;
-      width: 1px;
-      background: var(--primary);
-      height: 0%;
-      transition: height 0.5s ease-out;
-    }
-
-    .pipeline-stage {
-      position: relative;
-      margin-bottom: 4rem;
-      opacity: 0.25;
-      transform: translateY(20px);
-      transition: opacity 0.5s, transform 0.5s;
-    }
-
-    .pipeline-stage.active {
-      opacity: 1;
-      transform: none;
-    }
-
-    .pipeline-stage-dot {
-      position: absolute;
-      left: -3rem;
-      top: 0.5rem;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 1.5px solid var(--text-muted);
-      z-index: 2;
-      transition: all var(--transition);
-    }
-
-    .pipeline-stage.active .pipeline-stage-dot {
-      border-color: var(--primary);
-      background-color: var(--primary);
-      box-shadow: 0 0 10px rgba(255, 92, 0, 0.35);
-    }
-
-    .pipeline-stage-content {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.4rem;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.02);
-    }
-
-    .pipeline-stage.active .pipeline-stage-content {
-      border-color: var(--border-active);
-      box-shadow: 0 4px 16px rgba(255, 92, 0, 0.03);
-    }
-
-    .stage-header {
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 0.4rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
     }
-
-    .stage-num {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
+    .scroll-indicator span.chevron {
+      font-size: 0.9rem;
+      animation: pulse-down 1.5s infinite;
       color: var(--primary);
-      font-weight: 600;
     }
 
-    .stage-title {
+    @keyframes pulse-down {
+      0%, 100% { transform: translateY(0); opacity: 0.3; }
+      50% { transform: translateY(5px); opacity: 1; }
+    }
+
+    /* ══════════════════════════════════════════════════════
+       ABOUT SECTION
+       ══════════════════════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-avatar-container {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 250px;
+      height: 250px;
+      margin: 0 auto;
+    }
+
+    .about-avatar-ring {
+      position: absolute;
+      inset: -10px;
+      border: 1px dashed rgba(0, 255, 136, 0.2);
+      border-radius: 50%;
+      animation: spin-clockwise 30s linear infinite;
+    }
+    .about-avatar-ring::after {
+      content: "";
+      position: absolute;
+      top: -3px; left: 50%; width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    .about-avatar-hex {
+      width: 200px;
+      height: 200px;
+      position: relative;
+    }
+
+    .about-avatar-clip {
+      width: 160px;
+      height: 160px;
+      clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+      position: absolute;
+      top: 20px; left: 20px;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-avatar-clip::after {
+      content: "NO_PHOTO";
       font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .about-bio-text {
+      font-size: 0.88rem;
+      line-height: 1.7;
       color: var(--text);
     }
 
-    .stage-sub {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      margin-bottom: 0.8rem;
-      font-weight: 500;
+    .about-metrics {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 1rem;
     }
 
-    .stage-desc {
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      line-height: 1.6;
+    .about-metric-row {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .metric-id {
+      color: var(--primary);
+      width: 220px;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-dots {
+      flex: 1;
+      border-bottom: 1px dashed rgba(74, 122, 155, 0.25);
+      margin: 0 1rem;
+      height: 8px;
+    }
+
+    .metric-val {
+      font-family: var(--font-display);
+      color: var(--accent);
+      font-weight: 700;
+      text-shadow: 0 0 5px var(--accent-glow);
     }
 
     /* ══════════════════════════════════════════════════════
-       ROBOTICS SYSTEM MODULES
+       ROBOTICS SYSTEM MODULES & SIMULATOR
        ══════════════════════════════════════════════════════ */
     .systems-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
+      gap: 2rem;
       margin-top: 1rem;
     }
 
     .system-module-body {
-      padding: 1.4rem;
+      padding: 1.5rem;
     }
 
     .system-module-tag {
-      font-family: var(--font-mono);
       font-size: 0.7rem;
-      color: var(--primary);
+      color: var(--accent);
       margin-bottom: 0.3rem;
       font-weight: 600;
+      letter-spacing: 0.1em;
     }
 
     .system-module-title {
       font-family: var(--font-display);
       font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
       color: var(--text);
+      letter-spacing: 0.05em;
     }
 
     .system-pkg-list {
@@ -920,34 +1078,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #FFFFFF;
-      border: 1px solid var(--border);
+      background: rgba(0, 212, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.1);
       padding: 0.55rem 0.8rem;
-      border-radius: var(--radius);
       font-family: var(--font-mono);
       font-size: 0.72rem;
       transition: all var(--transition);
     }
 
     .system-pkg-item:hover {
-      border-color: var(--border-active);
-      background: var(--primary-dim);
+      border-color: rgba(0, 212, 255, 0.3);
+      background: rgba(0, 212, 255, 0.08);
     }
 
     .system-pkg-name {
-      color: var(--text-dim);
+      color: var(--text);
     }
 
     .system-pkg-status {
       color: var(--accent);
       font-weight: 600;
+      text-shadow: 0 0 5px var(--accent-glow);
     }
 
-    /* ══════════════════════════════════════════════════════
-       SIGNATURE INTERACTIVE TELEOPERATION VISUALIZER
-       ══════════════════════════════════════════════════════ */
+    /* Signature Simulator Panel */
     .teleop-panel {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
       width: 100%;
     }
 
@@ -955,13 +1111,12 @@
       display: grid;
       grid-template-columns: 1fr 280px;
       gap: 1.5rem;
-      padding: 1.4rem;
+      padding: 1.5rem;
     }
 
     #teleop-canvas-container {
-      background: #FAFBFD; /* Light engineering blueprint grid backdrop */
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      background: rgba(5, 10, 20, 0.5);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       height: 320px;
       position: relative;
       overflow: hidden;
@@ -976,56 +1131,60 @@
     .teleop-sidebar {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      gap: 1rem;
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       padding: 1.2rem;
     }
 
     .teleop-widget-title {
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
       font-size: 0.72rem;
-      color: var(--text-muted);
+      color: var(--primary);
       margin-bottom: 0.4rem;
-      letter-spacing: 0.08em;
-      font-weight: 600;
+      letter-spacing: 0.1em;
+      font-weight: 700;
     }
 
     .teleop-control-group {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
 
     .teleop-btn {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 0.45rem;
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      padding: 0.55rem;
+      background: rgba(0, 212, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      color: var(--primary);
       transition: all var(--transition);
       text-align: center;
       font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .teleop-btn:hover {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--primary);
     }
 
     .teleop-btn.active {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: var(--primary-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+      box-shadow: 0 0 10px var(--accent-glow);
     }
 
     .teleop-stats {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.5rem;
       margin-top: auto;
-      border-top: 1px solid var(--border);
-      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(0, 212, 255, 0.15);
+      padding-top: 1rem;
     }
 
     .teleop-stat-row {
@@ -1039,36 +1198,35 @@
 
     .teleop-stat-val {
       color: var(--text);
+      font-family: var(--font-mono);
     }
 
     .teleop-stat-val.active {
-      color: var(--primary);
+      color: var(--accent);
       font-weight: 600;
+      text-shadow: 0 0 5px var(--accent-glow);
     }
 
-    /* ══════════════════════════════════════════════════════
-       ROBOTICS COMMAND TERMINAL
-       ══════════════════════════════════════════════════════ */
+    /* Terminal logs */
     .terminal-panel {
-      margin-top: 2rem;
+      margin-top: 2.5rem;
     }
 
     .terminal-body {
-      background: #FAFBFD;
+      background: rgba(5, 10, 20, 0.75);
       font-family: var(--font-mono);
       font-size: 0.72rem;
-      color: var(--text-dim);
+      color: var(--text);
       padding: 1.2rem;
       height: 220px;
       overflow-y: auto;
       line-height: 1.6;
-      border-top: 1px solid rgba(15, 23, 42, 0.04);
     }
 
     .term-line {
       display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.15rem;
+      gap: 0.6rem;
+      margin-bottom: 0.2rem;
     }
 
     .term-ts {
@@ -1077,7 +1235,7 @@
     }
 
     .term-content {
-      color: var(--text-dim);
+      color: var(--text);
     }
 
     .term-content.warn {
@@ -1086,66 +1244,376 @@
     }
 
     .term-content.err {
-      color: #EF4444;
+      color: #ef4444;
       font-weight: 600;
     }
 
     /* ══════════════════════════════════════════════════════
-       SKILLS SECTION (Keycap Modular Tiles)
+       SKILLS SECTION — GROUPED HUD SYSTEM MODULES
        ══════════════════════════════════════════════════════ */
     .skills-layout {
-      margin-top: 1rem;
-    }
-
-    .skills-packages {
+      margin-top: 1.5rem;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0.8rem;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
     }
 
-    .pkg-card {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.7rem 0.9rem;
+    .skills-panel {
+      background: var(--bg-panel);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .skills-panel-title {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      color: var(--primary);
+      letter-spacing: 0.15em;
+      border-bottom: 1px dashed rgba(0, 212, 255, 0.15);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skills-panel-title::after {
+      content: "[ONLINE]";
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      color: var(--accent);
+      text-shadow: 0 0 5px var(--accent-glow);
+    }
+
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+
+    .skill-name {
+      color: var(--text);
+    }
+
+    .skill-percent {
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    .skill-bar-bg {
+      height: 4px;
+      background: rgba(0, 212, 255, 0.1);
+      position: relative;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      width: 0%; /* Animate on scroll */
+      box-shadow: 0 0 5px var(--primary-glow);
+    }
+
+    /* ══════════════════════════════════════════════════════
+       CAREER SECTION — CIRCUIT BOARD TIMELINE
+       ══════════════════════════════════════════════════════ */
+    .circuit-timeline-container {
+      position: relative;
+      margin-top: 3rem;
+      padding: 2rem 0;
+    }
+
+    /* The Vertical Trace Line in Center */
+    .pcb-main-trace {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(0, 212, 255, 0.1);
+      transform: translateX(-50%);
+    }
+
+    .pcb-active-trace {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 0%; /* Animated */
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      box-shadow: 0 0 8px var(--primary);
+    }
+
+    .timeline-nodes-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .timeline-node-item {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      align-items: center;
+    }
+
+    /* Left Side Elements */
+    .timeline-left {
+      text-align: right;
+    }
+
+    /* Right Side Elements */
+    .timeline-right {
+      text-align: left;
+    }
+
+    /* Central Joint Node */
+    .timeline-joint {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .joint-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      z-index: 20;
+      transition: all 0.3s ease;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
+      justify-content: center;
+    }
+
+    .joint-dot::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(0, 212, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    /* Card activated styling */
+    .timeline-node-item.active .joint-dot {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .timeline-node-item.active .joint-dot::after {
+      background: var(--accent);
+      box-shadow: 0 0 5px var(--accent);
+    }
+
+    /* PCB Milestone Card Design (IC style) */
+    .timeline-card {
+      max-width: 480px;
+      background: var(--bg-panel);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      padding: 1.4rem;
+      position: relative;
       transition: all var(--transition);
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+      opacity: 0.3;
+      transform: translateY(30px);
     }
 
-    .pkg-card:hover {
-      border-color: var(--primary);
-      background: var(--primary-dim);
-      box-shadow: 0 4px 10px rgba(255, 92, 0, 0.05);
-      transform: translateY(-1px);
+    .timeline-left .timeline-card {
+      margin-left: auto;
     }
 
-    .pkg-icon {
-      color: var(--text-muted);
-      font-size: 0.75rem;
+    .timeline-node-item.active .timeline-card {
+      opacity: 1;
+      transform: translateY(0);
+      border-color: rgba(0, 255, 136, 0.3);
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.05);
     }
 
-    .pkg-card:hover .pkg-icon {
+    /* Decorative Card Corner Tabs */
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: -1px; width: 6px; height: 6px;
+      border-top: 2.5px solid var(--primary);
+      border-left: 2.5px solid var(--primary);
+    }
+
+    .timeline-node-item.active .timeline-card::before {
+      border-color: var(--accent);
+    }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dashed rgba(0, 212, 255, 0.15);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .timeline-node-item.active .card-header-row {
+      border-color: rgba(0, 255, 136, 0.15);
+    }
+
+    .card-rev {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
       color: var(--primary);
+      letter-spacing: 0.05em;
     }
 
-    .pkg-name {
-      color: var(--text-dim);
+    .timeline-node-item.active .card-rev {
+      color: var(--accent);
     }
 
-    .pkg-card:hover .pkg-name {
+    .card-year {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .card-sub {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+
+    .timeline-node-item.active .card-desc {
       color: var(--text);
     }
 
     /* ══════════════════════════════════════════════════════
-       HUMANOID ROADMAP
+       PROJECTS SECTION — SECURE MISSION FILES Grid
+       ══════════════════════════════════════════════════════ */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-card-body {
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      height: 220px;
+    }
+
+    .project-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px dashed rgba(0, 212, 255, 0.15);
+      padding-bottom: 0.6rem;
+    }
+
+    .project-title-meta h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+
+    .project-title-meta p {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--primary);
+      margin-top: 0.15rem;
+      font-weight: 500;
+    }
+
+    .project-status-badge {
+      font-size: 0.6rem;
+      padding: 0.15rem 0.4rem;
+      border: 1px solid;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .project-status-badge.deployed,
+    .project-status-badge.complete,
+    .project-status-badge.operational {
+      border-color: rgba(0, 255, 136, 0.3);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+    
+    .project-status-badge.active,
+    .project-status-badge.online {
+      border-color: rgba(0, 212, 255, 0.3);
+      color: var(--primary);
+      background: var(--primary-dim);
+    }
+
+    .project-desc-txt {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .project-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: auto;
+    }
+
+    .project-tag-item {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      background: rgba(0, 212, 255, 0.05);
+      border: 1px solid rgba(0, 212, 255, 0.1);
+      padding: 0.1rem 0.4rem;
+      color: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       ROADMAP
        ══════════════════════════════════════════════════════ */
     .roadmap-panel {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
     }
 
     .roadmap-body {
@@ -1153,24 +1621,23 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      position: relative;
     }
 
     .roadmap-node-container {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1.5rem;
       position: relative;
     }
 
     .roadmap-node-container::before {
       content: '';
       position: absolute;
-      left: 15px;
-      top: 32px;
+      left: 17px;
+      top: 36px;
       bottom: -24px;
       width: 1px;
-      background: var(--border);
+      background: rgba(0, 212, 255, 0.15);
     }
 
     .roadmap-node-container:last-child::before {
@@ -1178,15 +1645,15 @@
     }
 
     .roadmap-node-dot {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: #FFFFFF;
-      border: 1.5px solid var(--border);
+      background: var(--bg);
+      border: 1px solid rgba(0, 212, 255, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--font-mono);
+      font-family: var(--font-display);
       font-size: 0.72rem;
       color: var(--text-muted);
       z-index: 2;
@@ -1197,33 +1664,33 @@
       border-color: var(--accent);
       color: var(--accent);
       background-color: var(--accent-dim);
+      box-shadow: 0 0 10px var(--accent-glow);
     }
 
     .roadmap-node-container.active .roadmap-node-dot {
       border-color: var(--primary);
       color: var(--primary);
       background-color: var(--primary-dim);
+      box-shadow: 0 0 10px var(--primary-glow);
     }
 
     .roadmap-node-content {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.9rem 1.2rem;
+      background: rgba(10, 22, 40, 0.4);
+      border: 1px solid rgba(0, 212, 255, 0.12);
+      padding: 1rem 1.4rem;
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
       transition: border-color var(--transition);
-      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
     }
 
     .roadmap-node-container.completed .roadmap-node-content {
-      border-color: rgba(5, 150, 105, 0.2);
+      border-color: rgba(0, 255, 136, 0.2);
     }
 
     .roadmap-node-container.active .roadmap-node-content {
-      border-color: var(--border-active);
+      border-color: rgba(0, 212, 255, 0.35);
     }
 
     .roadmap-node-meta h4 {
@@ -1231,18 +1698,19 @@
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--text);
+      letter-spacing: 0.05em;
     }
 
     .roadmap-node-meta p {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 0.15rem;
+      margin-top: 0.25rem;
     }
 
     .roadmap-node-status {
-      font-family: var(--font-mono);
       font-size: 0.7rem;
-      font-weight: 500;
+      font-weight: 600;
+      letter-spacing: 0.05em;
     }
 
     .roadmap-node-container.completed .roadmap-node-status { color: var(--accent); }
@@ -1250,84 +1718,7 @@
     .roadmap-node-container.future .roadmap-node-status { color: var(--text-muted); }
 
     /* ══════════════════════════════════════════════════════
-       PROJECTS (SYSTEMS NETWORK LAYOUT)
-       ══════════════════════════════════════════════════════ */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem;
-      margin-top: 1rem;
-    }
-
-    .project-card-body {
-      padding: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-      height: 210px;
-    }
-
-    .project-header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .project-title-meta h3 {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .project-title-meta p {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--primary);
-      margin-top: 0.15rem;
-      font-weight: 500;
-    }
-
-    .project-status-badge {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      padding: 0.1rem 0.35rem;
-      border: 1.5px solid;
-      border-radius: 2px;
-      font-weight: 600;
-    }
-
-    .project-status-badge.deployed { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-    .project-status-badge.active { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
-    .project-status-badge.complete { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-    .project-status-badge.operational { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-    .project-status-badge.online { border-color: var(--primary); color: var(--primary); background: var(--primary-dim); }
-
-    .project-desc-txt {
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-
-    .project-tags-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      margin-top: auto;
-    }
-
-    .project-tag-item {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      padding: 0.1rem 0.4rem;
-      color: var(--text-muted);
-      border-radius: 2px;
-    }
-
-    /* ══════════════════════════════════════════════════════
-       COMMUNICATION CHANNEL
+       COMMUNICATION CHANNEL (CONTACT)
        ══════════════════════════════════════════════════════ */
     .contact-container {
       display: grid;
@@ -1339,99 +1730,101 @@
     .contact-details {
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1.5rem;
     }
 
     .contact-lead {
-      font-size: 0.92rem;
-      color: var(--text-dim);
+      font-size: 0.85rem;
+      color: var(--text-muted);
       line-height: 1.6;
     }
 
     .channel-list {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.8rem;
     }
 
     .channel-item {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-dim);
+      gap: 0.8rem;
+      font-size: 0.8rem;
+      color: var(--text);
       text-decoration: none;
       transition: color var(--transition);
     }
 
     .channel-item:hover {
-      color: var(--primary);
+      color: var(--accent);
     }
 
     .channel-icon {
-      width: 26px;
-      height: 26px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba(0, 212, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--primary);
-      font-size: 0.72rem;
-      background: #FFFFFF;
+      font-size: 0.85rem;
+      background: rgba(0, 212, 255, 0.03);
     }
 
+    .channel-item:hover .channel-icon {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    /* Terminal Form Console */
     .contact-form {
       display: flex;
       flex-direction: column;
-      gap: 0.9rem;
+      gap: 1.2rem;
     }
 
     .form-group-os {
       display: flex;
       flex-direction: column;
-      gap: 0.3rem;
+      gap: 0.4rem;
     }
 
     .form-group-os label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
+      font-size: 0.72rem;
+      color: var(--primary);
+      letter-spacing: 0.08em;
       font-weight: 500;
     }
 
     .form-input-os {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.65rem 0.8rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
+      background: rgba(5, 10, 20, 0.5);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      padding: 0.7rem 0.9rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
       color: var(--text);
       outline: none;
       transition: border-color var(--transition), box-shadow var(--transition);
     }
 
     .form-input-os:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 8px rgba(255, 92, 0, 0.08);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px rgba(0, 255, 136, 0.08);
     }
 
     .form-input-os::placeholder {
-      color: rgba(15, 23, 42, 0.2);
+      color: rgba(74, 122, 155, 0.35);
     }
 
     .form-console {
-      background: #FAFBFD;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      background: rgba(5, 10, 20, 0.75);
+      border: 1px solid rgba(0, 212, 255, 0.15);
       padding: 0.7rem 0.9rem;
       font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--text-muted);
-      min-height: 50px;
+      min-height: 60px;
       max-height: 120px;
       overflow-y: auto;
       line-height: 1.6;
@@ -1441,16 +1834,16 @@
       display: block;
       margin-bottom: 0.15rem;
     }
-    .console-line.success { color: var(--accent); font-weight: 500; }
-    .console-line.error { color: #EF4444; font-weight: 600; }
+    .console-line.success { color: var(--accent); font-weight: 600; text-shadow: 0 0 5px var(--accent-glow); }
+    .console-line.error { color: #ef4444; font-weight: 600; }
 
     /* ══════════════════════════════════════════════════════
        FOOTER
        ══════════════════════════════════════════════════════ */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem;
-      background: rgba(255, 255, 255, 0.8);
+      border-top: 1px solid rgba(0, 212, 255, 0.15);
+      padding: 2.5rem 2rem;
+      background: rgba(5, 10, 20, 0.9);
       text-align: center;
       position: relative;
       z-index: 10;
@@ -1462,45 +1855,56 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      font-family: var(--font-mono);
       font-size: 0.7rem;
       color: var(--text-muted);
+      letter-spacing: 0.05em;
     }
 
     /* ══════════════════════════════════════════════════════
        RESPONSIVE ADAPTATIONS
        ══════════════════════════════════════════════════════ */
     @media (max-width: 960px) {
+      body {
+        cursor: default; /* Disable custom cursor on mobile */
+      }
+      #reticle-cursor {
+        display: none !important;
+      }
+      
       .hero-container {
         grid-template-columns: 1fr;
         gap: 3rem;
         text-align: center;
       }
       .identity-core {
-        width: 310px;
-        height: 310px;
+        width: 280px;
+        height: 280px;
       }
+      .avatar-ring-outer { inset: 10px; }
+      .avatar-ring-inner { inset: 25px; }
       .scanner-photo-wrap {
-        width: 160px;
-        height: 160px;
+        width: 140px;
+        height: 140px;
       }
-      .ring-outer { width: 270px; height: 270px; }
-      .ring-mid { width: 230px; height: 230px; }
-      .ring-inner { width: 190px; height: 190px; }
-      .hud-laser { width: 240px; height: 240px; }
+      .hex-photo-clip {
+        width: 110px;
+        height: 110px;
+      }
+      .core-label.l { left: -10px; }
+      .core-label.r { right: -10px; }
       
       .hero-role-badge {
-        margin: 0.5rem auto 0;
+        margin: 0 auto;
       }
       .typewriter-container {
         justify-content: center;
       }
       .hero-tagline {
-        margin: 0.5rem auto 0;
+        margin: 0 auto;
         border-left: none;
-        border-bottom: 2px solid var(--primary-glow);
+        border-bottom: 1px solid rgba(0, 212, 255, 0.2);
         padding-left: 0;
-        padding-bottom: 0.6rem;
+        padding-bottom: 0.8rem;
       }
       .hero-buttons {
         justify-content: center;
@@ -1508,37 +1912,61 @@
       .hardware-widget {
         margin: 1.5rem auto 0;
       }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
       .systems-grid {
         grid-template-columns: 1fr;
       }
       .teleop-container {
         grid-template-columns: 1fr;
       }
-      .skills-packages {
-        grid-template-columns: repeat(2, 1fr);
+      .skills-layout {
+        grid-template-columns: 1fr;
+      }
+      .timeline-node-item {
+        grid-template-columns: 30px 1fr;
+        gap: 1.5rem;
+      }
+      .timeline-left, .timeline-right {
+        text-align: left;
+        grid-column: 2;
+      }
+      .timeline-joint {
+        grid-column: 1;
+        grid-row: 1;
+        justify-content: flex-start;
+      }
+      .pcb-main-trace {
+        left: 39px;
+        transform: none;
       }
       .projects-grid {
         grid-template-columns: 1fr;
       }
       .contact-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
       }
     }
 
     @media (max-width: 600px) {
       #navbar {
-        padding: 0.8rem 1.2rem;
+        padding: 0.8rem 1.5rem;
       }
       .nav-links {
         display: none;
         position: absolute;
         top: 100%; left: 0; right: 0;
-        background: rgba(255, 255, 255, 0.98);
-        border-bottom: 1px solid var(--border);
+        background: rgba(5, 10, 20, 0.98);
+        border-bottom: 1px solid rgba(0, 212, 255, 0.15);
         flex-direction: column;
-        padding: 1rem;
-        gap: 0.6rem;
+        padding: 1.5rem;
+        gap: 1rem;
+        align-items: center;
       }
       .nav-links.open {
         display: flex;
@@ -1546,8 +1974,8 @@
       .nav-hamburger {
         display: flex;
       }
-      .skills-packages {
-        grid-template-columns: 1fr;
+      .nav-system-status {
+        display: none;
       }
     }
   </style>
@@ -1585,16 +2013,17 @@
     <!-- HUD Nav Bar -->
     <nav id="navbar">
       <div class="nav-brand">
-        <span class="pulse-indicator"></span>
-        ATHUL_OS
+        ATHUL_OS <span class="cursor"></span>
       </div>
       <ul class="nav-links" id="navLinks">
         <li><a href="#hero" class="active">HOME</a></li>
-        <li><a href="#evolution">EVOLUTION</a></li>
+        <li><a href="#about">ABOUT</a></li>
         <li><a href="#systems">SYSTEMS</a></li>
+        <li><a href="#skills">SKILLS</a></li>
+        <li><a href="#timeline">TIMELINE</a></li>
         <li><a href="#projects">PROJECTS</a></li>
         <li><a href="#roadmap">ROADMAP</a></li>
-        <li><a href="#communication">COMMUNICATION</a></li>
+        <li><a href="#communication">CONTACT</a></li>
       </ul>
       <div class="nav-system-status">
         <span>CORE: NOMINAL</span>
@@ -1610,25 +2039,42 @@
     <!-- ══════════════════════════════════════════════ -->
     <section id="hero">
       <canvas id="threeCanvas"></canvas>
+      
+      <!-- HUD Decorative Overlays -->
+      <div class="hud-frame-left">
+        SYS_ACTIVE: TRUE<br />
+        LOC: 10.12°N / 76.34°E<br />
+        BATTERY: 100%<br />
+        BAUD_RATE: 115200
+      </div>
+
+      <div class="hud-frame-right">
+        <div class="radar-sweep-container">
+          <div class="radar-sweep-cross"></div>
+        </div>
+        <span style="font-family: var(--font-mono); font-size: 0.55rem; color: var(--text-muted);">RADAR_SCAN</span>
+      </div>
+
       <div class="hero-container">
         <!-- Holographic Identity Core -->
         <div class="identity-core">
-          <div class="tele-ring ring-outer"></div>
-          <div class="tele-ring ring-mid"></div>
-          <div class="tele-ring ring-inner">
-            <div class="orbit-particle"></div>
-          </div>
-          <div class="hud-laser"></div>
+          <div class="avatar-ring-outer"></div>
+          <div class="avatar-ring-inner"></div>
           
           <div class="core-label t">SYS_MODE: COMPILATION</div>
-          <div class="core-label b">LOC: 10.12°N / 76.34°E</div>
+          <div class="core-label b">LOC: KERALA, IN</div>
           <div class="core-label l">CORE: HUMBLE</div>
           <div class="core-label r">ROADMAP: HUMANOID</div>
 
           <div class="scanner-photo-wrap">
-            <img src="profile.jpg" alt="Athul Krishna K M" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
-            <div class="photo-placeholder">
-              <span>AK</span>
+            <svg class="hex-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polygon points="50,2 93.3,27 93.3,77 50,100 6.7,77 6.7,27" fill="none" stroke="var(--primary)" stroke-width="1.5" />
+            </svg>
+            <div class="hex-photo-clip">
+              <img src="profile.jpg" alt="Athul Krishna K M" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="photo-placeholder">
+                <span>AK</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1636,7 +2082,7 @@
         <!-- Meta Identity Card -->
         <div class="hero-meta">
           <div class="sys-tag">&lt; CORE_ID: ATHUL_KRISHNA_K_M /&gt;</div>
-          <h1 class="hero-name">ATHUL KRISHNA<br />K M</h1>
+          <h1 class="hero-name" id="scramble-name">ATHUL KRISHNA K M</h1>
           <div class="hero-role-badge">
             <span class="role-dot"></span>
             Junior Robotics Engineer
@@ -1651,168 +2097,86 @@
           </p>
           <div class="hero-buttons">
             <a href="#projects" class="btn">
-              <span class="btn-icon">⬡</span> VIEW DEPLOYED SYSTEMS
+              <span>⬡</span> DEPLOYED SYSTEMS
             </a>
             <a href="resume.pdf" download class="btn btn-accent">
-              <span class="btn-icon">↓</span> GET TECHNICAL RESUME
+              <span>↓</span> DOWNLOAD RESUME
             </a>
           </div>
 
-          <!-- Unique Teenage Engineering Interactive Parameters Widget -->
+          <!-- Slider Parameter Control Panel -->
           <div class="hardware-widget">
             <div class="hw-title">
-              <span>HARDWARE_PARAMETERS_CONTROL</span>
+              <span>SYSTEMS_PARAMETERS_TUNER</span>
               <span>v4.0</span>
             </div>
             <div class="hw-slider-group">
-              <span class="hw-label">PROCESSOR_CLOCK:</span>
+              <span class="hw-label">PARTICLE_SPEED_HZ:</span>
               <input type="range" id="param-speed" class="hw-slider" min="100" max="2000" step="50" value="800" />
-              <span class="hw-val" id="val-speed">800 MHz</span>
+              <span class="hw-val" id="val-speed">800 Hz</span>
             </div>
             <div class="hw-slider-group">
-              <span class="hw-label">GRID_LINE_DENSITY:</span>
-              <input type="range" id="param-grid" class="hw-slider" min="20" max="80" step="5" value="40" />
-              <span class="hw-val" id="val-grid">40px</span>
+              <span class="hw-label">GRID_DENSITY_PX:</span>
+              <input type="range" id="param-grid" class="hw-slider" min="20" max="80" step="5" value="24" />
+              <span class="hw-val" id="val-grid">24px</span>
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <span>SCROLL TO EXPLORE</span>
+        <span class="chevron">∨</span>
       </div>
     </section>
 
     <!-- ══════════════════════════════════════════════ -->
-    <!--  EVOLUTION TIMELINE                            -->
+    <!--  ABOUT SECTION                                 -->
     <!-- ══════════════════════════════════════════════ -->
-    <section id="evolution">
+    <section id="about">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
       <div class="section-header">
-        <span class="section-tag">// LOG_PIPELINE</span>
-        <h2 class="section-title">Evolution Pathway</h2>
+        <span class="section-tag">// LOG_PILOT_PROFILE</span>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Pilot Profile <span class="hud-bracket">]</span></h2>
         <div class="section-line"></div>
       </div>
 
-      <div class="evolution-pipeline">
-        <div class="pipeline-track"></div>
-        <div class="pipeline-progress" id="pipelineProgress"></div>
-
-        <!-- Stage 1 -->
-        <div class="pipeline-stage" id="stage-1">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Computer Science Engineer</h3>
-              <span class="stage-num">STAGE 01</span>
-            </div>
-            <div class="stage-sub">FOUNDATIONAL STRUCTURE</div>
-            <p class="stage-desc">
-              Began career path as a computer science engineer, building core foundations in software architecture, systems programming, memory safety, and networking.
-            </p>
+      <div class="about-grid">
+        <div class="about-avatar-container">
+          <div class="about-avatar-ring"></div>
+          <div class="about-avatar-hex">
+            <svg class="hex-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polygon points="50,2 93.3,27 93.3,77 50,100 6.7,77 6.7,27" fill="none" stroke="var(--accent)" stroke-width="1" />
+            </svg>
+            <div class="about-avatar-clip"></div>
           </div>
         </div>
 
-        <!-- Stage 2 -->
-        <div class="pipeline-stage" id="stage-2">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Face Recognition Systems</h3>
-              <span class="stage-num">STAGE 02</span>
+        <div class="about-content">
+          <p class="about-bio-text">
+            I am a Junior Robotics Engineer with hands-on experience in building ROS2 controls, manipulating multi-DoF arms, configuring autonomous navigation stacks, and setting up real-time bilateral teleoperation. I specialize in bridging hardware limits with high-level software stack systems to deliver reliable and secure operations.
+          </p>
+
+          <div class="about-metrics">
+            <div class="about-metric-row">
+              <span class="metric-id">[METRIC_SYS_DEPLOYMENTS]</span>
+              <div class="metric-dots"></div>
+              <span class="metric-val" id="stat-projects">0</span>
             </div>
-            <div class="stage-sub">COMPUTER VISION PERCEPTION</div>
-            <p class="stage-desc">
-              Integrated real-time perception algorithms, building face recognition systems using Python and OpenCV. Configured video frame pipelines for classification.
-            </p>
+            <div class="about-metric-row">
+              <span class="metric-id">[METRIC_EXP_DURATION]</span>
+              <div class="metric-dots"></div>
+              <span class="metric-val" id="stat-years">0</span>
+            </div>
+            <div class="about-metric-row">
+              <span class="metric-id">[METRIC_PACKAGES_INSTALLED]</span>
+              <div class="metric-dots"></div>
+              <span class="metric-val" id="stat-packages">0</span>
+            </div>
           </div>
         </div>
-
-        <!-- Stage 3 -->
-        <div class="pipeline-stage" id="stage-3">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">ROS2 Development</h3>
-              <span class="stage-num">STAGE 03</span>
-            </div>
-            <div class="stage-sub">SYSTEM INTEGRATION & COMMUNICATIONS</div>
-            <p class="stage-desc">
-              Migrated to ROS2 Humble. Developed node interfaces, managed custom topics, services, and actions, and configured launch file structures for automated systems.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stage 4 -->
-        <div class="pipeline-stage" id="stage-4">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Navigation & SLAM</h3>
-              <span class="stage-num">STAGE 04</span>
-            </div>
-            <div class="stage-sub">SPATIAL INTELLECT & PLANNING</div>
-            <p class="stage-desc">
-              Implemented Nav2 navigation stacks for mobile robot systems. Integrated SLAM Toolbox to map environments and AMCL to resolve particle-filter localizations.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stage 5 -->
-        <div class="pipeline-stage" id="stage-5">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Robot Manipulation</h3>
-              <span class="stage-num">STAGE 05</span>
-            </div>
-            <div class="stage-sub">ACTUATION & KINEMATICS</div>
-            <p class="stage-desc">
-              Constructed industrial controller plugins using C++ and ros2_control. Solved inverse kinematics and path planning constraints for robot arms with MoveIt2.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stage 6 -->
-        <div class="pipeline-stage" id="stage-6">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Teleoperation Systems</h3>
-              <span class="stage-num">STAGE 06</span>
-            </div>
-            <div class="stage-sub">BILATERAL SYNCHRONIZATION</div>
-            <p class="stage-desc">
-              Built leader-follower systems for LeRobot arms. Tuned sub-100ms hardware synchronization loops and created calibration pipelines for remote manipulation.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stage 7 -->
-        <div class="pipeline-stage" id="stage-7">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Junior Robotics Engineer</h3>
-              <span class="stage-num">STAGE 07</span>
-            </div>
-            <div class="stage-sub">ACTIVE DEPLOYMENTS</div>
-            <p class="stage-desc">
-              Deploying production robotics stacks at I Hub Robotics. Connecting advanced teleoperation frameworks with low-latency communication tunnels and imitation learning.
-            </p>
-          </div>
-        </div>
-
-        <!-- Stage 8 -->
-        <div class="pipeline-stage" id="stage-8">
-          <div class="pipeline-stage-dot"></div>
-          <div class="pipeline-stage-content">
-            <div class="stage-header">
-              <h3 class="stage-title">Future Humanoid Robotics Engineer</h3>
-              <span class="stage-num">STAGE 08</span>
-            </div>
-            <div class="stage-sub">EMBODIED AI / HUMANOID CORE</div>
-            <p class="stage-desc">
-              Progressing toward whole-body humanoid control. Training policy networks on physical platforms and integrating vision-language-action (VLA) models for cognitive physical actions.
-            </p>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -1820,14 +2184,16 @@
     <!--  SYSTEMS MODULES                               -->
     <!-- ══════════════════════════════════════════════ -->
     <section id="systems">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
       <div class="section-header">
-        <span class="section-tag">// MODULE_CORE</span>
-        <h2 class="section-title">Robotics System Modules</h2>
+        <span class="section-tag">// MODULE_ROBOTICS_CORE</span>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Robotics System Modules <span class="hud-bracket">]</span></h2>
         <div class="section-line"></div>
       </div>
 
       <div class="systems-grid">
-
         <!-- Module 01 -->
         <div class="os-window">
           <div class="os-window-header">
@@ -1959,10 +2325,9 @@
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- Signature Teleoperation Canvas Panel -->
+      <!-- Simulator Node -->
       <div class="os-window teleop-panel">
         <div class="os-window-header">
           <span class="os-dot red"></span>
@@ -2005,7 +2370,7 @@
         </div>
       </div>
 
-      <!-- Floating Command Terminal Node -->
+      <!-- Floating Terminal Node -->
       <div class="os-window terminal-panel">
         <div class="os-window-header">
           <span class="os-dot red"></span>
@@ -2021,18 +2386,363 @@
     </section>
 
     <!-- ══════════════════════════════════════════════ -->
-    <!--  PROJECTS (SYSTEM MANIFESTS)                   -->
+    <!--  SKILLS SECTION                                -->
+    <!-- ══════════════════════════════════════════════ -->
+    <section id="skills">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
+      <div class="section-header">
+        <span class="section-tag">// MODULE_CORE_DEPENDENCIES</span>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Installed Packages <span class="hud-bracket">]</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="skills-layout">
+        <!-- Subsystem Group 1 -->
+        <div class="skills-panel">
+          <div class="skills-panel-title">LOCOMOTION & CONTROL</div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">ros2-humble-core</span>
+                <span class="skill-percent">95%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">ros-humble-moveit2</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">ros-humble-nav2</span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="88%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">gazebo-simulation</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subsystem Group 2 -->
+        <div class="skills-panel">
+          <div class="skills-panel-title">PERCEPTION CORE</div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">libopencv-dev</span>
+                <span class="skill-percent">85%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">slam-toolbox-rt</span>
+                <span class="skill-percent">88%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="88%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">rviz2-visualization</span>
+                <span class="skill-percent">92%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="92%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subsystem Group 3 -->
+        <div class="skills-panel">
+          <div class="skills-panel-title">HARDWARE STACK</div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">ubuntu-kernel-rt</span>
+                <span class="skill-percent">82%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="82%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">teleop-bilateral-sync</span>
+                <span class="skill-percent">90%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="90%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subsystem Group 4 -->
+        <div class="skills-panel">
+          <div class="skills-panel-title">SOFTWARE ENVIRONMENT</div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">python3-pip</span>
+                <span class="skill-percent">95%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">gcc-gplusplus-11</span>
+                <span class="skill-percent">87%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="87%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">lerobot-manipulation</span>
+                <span class="skill-percent">85%</span>
+              </div>
+              <div class="skill-bar-bg">
+                <div class="skill-bar-fill" data-percent="85%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!--  TIMELINE SECTION                              -->
+    <!-- ══════════════════════════════════════════════ -->
+    <section id="timeline">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
+      <div class="section-header">
+        <span class="section-tag">// PIPELINE_EXECUTION_TIMELINE</span>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Evolution Pipeline <span class="hud-bracket">]</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="circuit-timeline-container">
+        <!-- Center trace track -->
+        <div class="pcb-main-trace">
+          <div class="pcb-active-trace" id="timeline-progress-bar"></div>
+        </div>
+
+        <div class="timeline-nodes-wrap">
+          <!-- Stage 1 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 1.0</span>
+                  <span class="card-year">2022</span>
+                </div>
+                <h3 class="card-title">Computer Science Engineer</h3>
+                <div class="card-sub">FOUNDATIONAL STRUCTURE</div>
+                <p class="card-desc">
+                  Began career path as a computer science engineer, building core foundations in software architecture, systems programming, memory safety, and networking.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right"></div>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left"></div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 2.0</span>
+                  <span class="card-year">2023</span>
+                </div>
+                <h3 class="card-title">Face Recognition Systems</h3>
+                <div class="card-sub">COMPUTER VISION PERCEPTION</div>
+                <p class="card-desc">
+                  Integrated real-time perception algorithms, building face recognition systems using Python and OpenCV. Configured video frame pipelines for classification.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 3 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 3.0</span>
+                  <span class="card-year">2023</span>
+                </div>
+                <h3 class="card-title">ROS2 Development</h3>
+                <div class="card-sub">SYSTEM INTEGRATION & COMMUNICATIONS</div>
+                <p class="card-desc">
+                  Migrated to ROS2 Humble. Developed node interfaces, managed custom topics, services, and actions, and configured launch file structures for automated systems.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right"></div>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left"></div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 4.0</span>
+                  <span class="card-year">2024</span>
+                </div>
+                <h3 class="card-title">Navigation & SLAM</h3>
+                <div class="card-sub">SPATIAL INTELLECT & PLANNING</div>
+                <p class="card-desc">
+                  Implemented Nav2 navigation stacks for mobile robot systems. Integrated SLAM Toolbox to map environments and AMCL to resolve particle-filter localizations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 5 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 5.0</span>
+                  <span class="card-year">2024</span>
+                </div>
+                <h3 class="card-title">Robot Manipulation</h3>
+                <div class="card-sub">ACTUATION & KINEMATICS</div>
+                <p class="card-desc">
+                  Constructed industrial controller plugins using C++ and ros2_control. Solved inverse kinematics and path planning constraints for robot arms with MoveIt2.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right"></div>
+          </div>
+
+          <!-- Stage 6 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left"></div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 6.0</span>
+                  <span class="card-year">2025</span>
+                </div>
+                <h3 class="card-title">Teleoperation Systems</h3>
+                <div class="card-sub">BILATERAL SYNCHRONIZATION</div>
+                <p class="card-desc">
+                  Built leader-follower systems for LeRobot arms. Tuned sub-100ms hardware synchronization loops and created calibration pipelines for remote manipulation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stage 7 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 7.0</span>
+                  <span class="card-year">2025</span>
+                </div>
+                <h3 class="card-title">Junior Robotics Engineer</h3>
+                <div class="card-sub">ACTIVE DEPLOYMENTS</div>
+                <p class="card-desc">
+                  Deploying production robotics stacks at I Hub Robotics. Connecting advanced teleoperation frameworks with low-latency communication tunnels and imitation learning.
+                </p>
+              </div>
+            </div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right"></div>
+          </div>
+
+          <!-- Stage 8 -->
+          <div class="timeline-node-item">
+            <div class="timeline-left"></div>
+            <div class="timeline-joint">
+              <div class="joint-dot"></div>
+            </div>
+            <div class="timeline-right">
+              <div class="timeline-card">
+                <div class="card-header-row">
+                  <span class="card-rev">REV 8.0</span>
+                  <span class="card-year">2026</span>
+                </div>
+                <h3 class="card-title">Future Humanoid Robotics Engineer</h3>
+                <div class="card-sub">EMBODIED AI / HUMANOID CORE</div>
+                <p class="card-desc">
+                  Progressing toward whole-body humanoid control. Training policy networks on physical platforms and integrating vision-language-action (VLA) models for cognitive physical actions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!--  PROJECTS SECTION                              -->
     <!-- ══════════════════════════════════════════════ -->
     <section id="projects">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
       <div class="section-header">
-        <span class="section-tag">// DEPLOYED_SYSTEMS</span>
-        <h2 class="section-title">Deployed Systems</h2>
+        <span class="section-tag">// DEPLOYED_SYSTEM_MANIFEST</span>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Deployed Systems <span class="hud-bracket">]</span></h2>
         <div class="section-line"></div>
       </div>
 
       <div class="projects-grid">
-
-        <!-- System Node 1 -->
+        <!-- Project 1 -->
         <div class="os-window">
           <div class="os-window-header">
             <span class="os-dot red"></span>
@@ -2060,7 +2770,7 @@
           </div>
         </div>
 
-        <!-- System Node 2 -->
+        <!-- Project 2 -->
         <div class="os-window">
           <div class="os-window-header">
             <span class="os-dot red"></span>
@@ -2088,7 +2798,7 @@
           </div>
         </div>
 
-        <!-- System Node 3 -->
+        <!-- Project 3 -->
         <div class="os-window">
           <div class="os-window-header">
             <span class="os-dot red"></span>
@@ -2115,7 +2825,7 @@
           </div>
         </div>
 
-        <!-- System Node 4 -->
+        <!-- Project 4 -->
         <div class="os-window">
           <div class="os-window-header">
             <span class="os-dot red"></span>
@@ -2142,7 +2852,7 @@
           </div>
         </div>
 
-        <!-- System Node 5 -->
+        <!-- Project 5 -->
         <div class="os-window">
           <div class="os-window-header">
             <span class="os-dot red"></span>
@@ -2168,81 +2878,19 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
     <!-- ══════════════════════════════════════════════ -->
-    <!--  SKILLS (INSTALLED PACKAGES)                   -->
-    <!-- ══════════════════════════════════════════════ -->
-    <section id="skills">
-      <div class="section-header">
-        <span class="section-tag">// APTPKG_MANIFEST</span>
-        <h2 class="section-title">Installed Packages</h2>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="skills-layout">
-        <div class="skills-packages">
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">ros2-humble-core</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">ros-humble-moveit2</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">ros-humble-nav2</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">gazebo-simulation</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">rviz2-visualization</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">libopencv-dev</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">ubuntu-kernel-rt</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">python3-pip</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">gcc-gplusplus-11</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">teleop-bilateral-sync</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">slam-toolbox-rt</span>
-          </div>
-          <div class="pkg-card">
-            <span class="pkg-icon">✓</span>
-            <span class="pkg-name">lerobot-manipulation</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!--  HUMANOID ROADMAP                              -->
+    <!--  ROADMAP SECTION                               -->
     <!-- ══════════════════════════════════════════════ -->
     <section id="roadmap">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
       <div class="section-header">
         <span class="section-tag">// TARGET_VECTORS</span>
-        <h2 class="section-title">Humanoid Roadmap</h2>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Humanoid Roadmap <span class="hud-bracket">]</span></h2>
         <div class="section-line"></div>
       </div>
 
@@ -2254,7 +2902,6 @@
           <span class="os-window-title">road_to_humanoid_robotics.map</span>
         </div>
         <div class="roadmap-body">
-
           <!-- Node 1 -->
           <div class="roadmap-node-container completed">
             <div class="roadmap-node-dot">01</div>
@@ -2326,18 +2973,20 @@
               <span class="roadmap-node-status">TARGET</span>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
     <!-- ══════════════════════════════════════════════ -->
-    <!--  COMMUNICATION CHANNEL                         -->
+    <!--  COMMUNICATION GATEWAY                         -->
     <!-- ══════════════════════════════════════════════ -->
     <section id="communication">
+      <div class="hud-corner-tr"></div>
+      <div class="hud-corner-bl"></div>
+
       <div class="section-header">
-        <span class="section-tag">// COMM_GATEWAY</span>
-        <h2 class="section-title">Establish Communication Channel</h2>
+        <span class="section-tag">// ESTABLISH_COMM_GATEWAY</span>
+        <h2 class="section-title"><span class="hud-bracket">[</span> Establish Communication Channel <span class="hud-bracket">]</span></h2>
         <div class="section-line"></div>
       </div>
 
@@ -2363,7 +3012,7 @@
           </div>
         </div>
 
-        <!-- Terminal Form Console -->
+        <!-- Form Panel -->
         <div class="os-window">
           <div class="os-window-header">
             <span class="os-dot red"></span>
@@ -2373,29 +3022,28 @@
           </div>
           <form class="contact-form" id="contactForm" style="padding: 1.5rem;">
             <div class="form-group-os">
-              <label for="from_name">SENDER_NAME:</label>
+              <label for="from_name">> SENDER_NAME:</label>
               <input type="text" id="from_name" class="form-input-os" placeholder="enter name..." required />
             </div>
             <div class="form-group-os">
-              <label for="from_email">SENDER_EMAIL:</label>
+              <label for="from_email">> SENDER_EMAIL:</label>
               <input type="email" id="from_email" class="form-input-os" placeholder="enter email..." required />
             </div>
             <div class="form-group-os">
-              <label for="subject">SUBJECT_HEADER:</label>
+              <label for="subject">> SUBJECT_HEADER:</label>
               <input type="text" id="subject" class="form-input-os" placeholder="enter subject..." required />
             </div>
             <div class="form-group-os">
-              <label for="message">TRANSMISSION_BODY:</label>
+              <label for="message">> TRANSMISSION_BODY:</label>
               <textarea id="message" rows="4" class="form-input-os" placeholder="type message details here..." required></textarea>
             </div>
 
-            <!-- Form Log Feedback Area -->
             <div class="form-console" id="formStatus">
               <span class="console-line">SYSTEM READY FOR INPUT.</span>
             </div>
 
             <button type="submit" class="btn btn-accent" id="submitBtn">
-              <span class="btn-icon">⚡</span> SEND TRANSMISSION
+              <span>⚡</span> TRANSMIT MESSAGE ▶
             </button>
           </form>
         </div>
@@ -2417,7 +3065,7 @@
        ATHUL_OS v4.0 — MAIN SCRIPT BLOCK
        ══════════════════════════════════════════════════════ */
 
-    /* ══════════ 1. BOOT SCREEN SEQUENCE ══════════ */
+    /* ══════════ 1. BOOT SEQUENCE ══════════ */
     (function initBootSequence() {
       const bootLog = document.getElementById('bootLog');
       const bootProgress = document.getElementById('boot-progress');
@@ -2429,16 +3077,16 @@
         { text: '(c) 2026 Athul Krishna. All rights reserved.', delay: 200 },
         { text: ' ', delay: 300 },
         { text: '[  0.034] Booting OS kernel... <span class="ok">OK</span>', delay: 450 },
-        { text: '[  0.180] Scanning system modules... 12 packages found.', delay: 650 },
-        { text: '[  0.320] Launching ROS2 Humble Hawksbill... <span class="ok">OK</span>', delay: 850 },
-        { text: '[  0.640] Spawning node: /move_group... <span class="ok">OK</span>', delay: 1050 },
-        { text: '[  0.920] Loading manipulation stack (MoveIt2)... <span class="ok">OK</span>', delay: 1350 },
-        { text: '[  1.210] Loading teleoperation stack (LeRobot)... <span class="ok">OK</span>', delay: 1550 },
-        { text: '[  1.540] Mounting hardware interface plugin... <span class="ok">OK</span>', delay: 1750 },
-        { text: '[  1.820] Initializing autonomous nav stack (Nav2)... <span class="ok">OK</span>', delay: 1950 },
-        { text: '[  2.120] Starting facial perception engine (OpenCV)... <span class="ok">OK</span>', delay: 2150 },
-        { text: '[  2.410] Validating humanoid trajectory roadmap... <span class="ok">OK</span>', delay: 2350 },
-        { text: '[  2.620] Verification nominal. Launching ATHUL_OS desktop...', delay: 2550 }
+        { text: '[  0.180] Scanning system modules... 12 packages found.', delay: 600 },
+        { text: '[  0.320] Launching ROS2 Humble Hawksbill... <span class="ok">OK</span>', delay: 750 },
+        { text: '[  0.640] Spawning node: /move_group... <span class="ok">OK</span>', delay: 900 },
+        { text: '[  0.920] Loading manipulation stack (MoveIt2)... <span class="ok">OK</span>', delay: 1050 },
+        { text: '[  1.210] Loading teleoperation stack (LeRobot)... <span class="ok">OK</span>', delay: 1200 },
+        { text: '[  1.540] Mounting hardware interface plugin... <span class="ok">OK</span>', delay: 1350 },
+        { text: '[  1.820] Initializing autonomous nav stack (Nav2)... <span class="ok">OK</span>', delay: 1500 },
+        { text: '[  2.120] Starting facial perception engine (OpenCV)... <span class="ok">OK</span>', delay: 1650 },
+        { text: '[  2.410] Validating humanoid trajectory roadmap... <span class="ok">OK</span>', delay: 1800 },
+        { text: '[  2.620] Verification nominal. Launching ATHUL_OS desktop...', delay: 1950 }
       ];
 
       let printedCount = 0;
@@ -2450,10 +3098,8 @@
           div.innerHTML = line.text;
           bootLog.appendChild(div);
           
-          // Auto scroll log window
           bootLog.scrollTop = bootLog.scrollHeight;
           
-          // Force layout flow & animate
           setTimeout(() => div.classList.add('printed'), 20);
 
           printedCount++;
@@ -2467,19 +3113,15 @@
       });
 
       function completeBootSequence() {
-        // Fade out boot screen
         gsap.to(bootScreen, {
           opacity: 0,
           duration: 0.6,
           onComplete: () => {
             bootScreen.style.display = 'none';
-            // Show & animate Desktop
             desktop.style.display = 'block';
             setTimeout(() => {
               desktop.style.opacity = '1';
-              // Trigger GSAP entries
               initGSAPAnimations();
-              // Initialize canvases now that desktop layout has width/height
               initThreeBackground();
               initTeleoperationSimulator();
             }, 50);
@@ -2491,6 +3133,8 @@
     /* ══════════ 2. RETICLE MOUSE TRAILING ══════════ */
     (function initReticleCursor() {
       const cursor = document.getElementById('reticle-cursor');
+      if (window.innerWidth <= 960) return; // Disable cursor on tablets/mobiles
+      
       let targetX = 0, targetY = 0;
       let currentX = 0, currentY = 0;
 
@@ -2500,7 +3144,6 @@
       });
 
       function updateCursor() {
-        // Slow lag interpolation for targeting crosshairs
         const ease = 0.15;
         currentX += (targetX - currentX) * ease;
         currentY += (targetY - currentY) * ease;
@@ -2512,15 +3155,14 @@
       }
       updateCursor();
 
-      // Expand reticle target lock on hoverable items
-      const hoverTargets = document.querySelectorAll('a, button, input, textarea, .pkg-card, .pipeline-stage-content, .hw-slider');
+      const hoverTargets = document.querySelectorAll('a, button, input, textarea, .system-pkg-item, .timeline-card, .os-window, .teleop-btn, .hw-slider');
       hoverTargets.forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('locked'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('locked'));
       });
     })();
 
-    /* ══════════ 3. HUD DIGITAL CLOCK ══════════ */
+    /* ══════════ 3. HUD CLOCK ══════════ */
     (function initHUDClock() {
       const clockEl = document.getElementById('sys-clock');
       function updateTime() {
@@ -2534,7 +3176,55 @@
       updateTime();
     })();
 
-    /* ══════════ 4. TYPEWRITER EFFECT ══════════ */
+    /* ══════════ 4. TEXT SCRAMBLE / GLITCH ANIMATION ══════════ */
+    (function initTextScramble() {
+      const el = document.getElementById('scramble-name');
+      const originalText = el.textContent;
+      const chars = '!@#$%^&*()_+~|}{[]:;?><,./-=';
+      
+      function scramble(targetText, duration, callback) {
+        let frame = 0;
+        const totalFrames = duration;
+        
+        function tick() {
+          frame++;
+          let text = '';
+          for (let i = 0; i < targetText.length; i++) {
+            if (targetText[i] === ' ') {
+              text += ' ';
+              continue;
+            }
+            const progress = i / targetText.length;
+            if (frame / totalFrames > progress) {
+              text += targetText[i];
+            } else {
+              text += chars[Math.floor(Math.random() * chars.length)];
+            }
+          }
+          el.textContent = text;
+          
+          if (frame < totalFrames) {
+            requestAnimationFrame(tick);
+          } else {
+            el.textContent = targetText;
+            if (callback) callback();
+          }
+        }
+        tick();
+      }
+      
+      // Scramble on load
+      setTimeout(() => {
+        scramble(originalText, 50);
+      }, 2100);
+
+      // Scramble on hover
+      el.addEventListener('mouseenter', () => {
+        scramble(originalText, 25);
+      });
+    })();
+
+    /* ══════════ 5. TYPEWRITER EFFECT ══════════ */
     (function initTypewriter() {
       const el = document.getElementById('typewriter');
       const words = [
@@ -2564,95 +3254,138 @@
           return;
         }
 
-        setTimeout(tick, deleting ? 40 : 80);
+        setTimeout(tick, deleting ? 30 : 60);
       }
-      setTimeout(tick, 3000); // Wait for boot to finish
+      setTimeout(tick, 2200);
     })();
 
-    /* ══════════ 5. THREE.JS WIREFRAME ROBOT ARM (HERO BACKGROUND) ══════════ */
+    /* ══════════ 6. THREE.JS INTERACTIVE PARTICLE FIELD ══════════ */
+    let particleAnimSpeed = 0.005;
+    
     function initThreeBackground() {
       const canvas = document.getElementById('threeCanvas');
       if (!canvas) return;
 
       const scene = new THREE.Scene();
       const W = canvas.clientWidth, H = canvas.clientHeight;
-      const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
-      camera.position.set(0, 3, 7);
-      camera.lookAt(0, 1.5, 0);
+      const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 100);
+      camera.position.z = 25;
 
       const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
       renderer.setSize(W, H);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      // Industrial theme wireframe steel-gray with orange highlights
-      const wireMaterial = new THREE.LineBasicMaterial({ color: 0x64748B, transparent: true, opacity: 0.25 });
-      const jointMaterial = new THREE.MeshBasicMaterial({ color: 0xFF5C00, wireframe: true, transparent: true, opacity: 0.15 });
+      // Particle Geometry (400 points)
+      const particleCount = window.innerWidth <= 960 ? 150 : 400; // Lower particles on mobile
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const velocities = [];
 
-      // Helper function to build segment
-      function createSegment(radius, length) {
-        const group = new THREE.Group();
-        
-        // Wire cylinder
-        const geo = new THREE.CylinderGeometry(radius, radius, length, 6, 2, true);
-        const edges = new THREE.EdgesGeometry(geo);
-        const line = new THREE.LineSegments(edges, wireMaterial);
-        line.position.y = length / 2;
-        group.add(line);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 45;
+        positions[i + 1] = (Math.random() - 0.5) * 25;
+        positions[i + 2] = (Math.random() - 0.5) * 20;
 
-        // Joint sphere
-        const jointGeo = new THREE.SphereGeometry(radius * 1.5, 8, 8);
-        const sphere = new THREE.Mesh(jointGeo, jointMaterial);
-        group.add(sphere);
-
-        return { group, length };
+        velocities.push({
+          x: (Math.random() - 0.5) * 0.05,
+          y: (Math.random() - 0.5) * 0.05,
+          z: (Math.random() - 0.5) * 0.02
+        });
       }
 
-      // Robot Arm Structure (Bases and Links)
-      const base = createSegment(0.6, 0.2);
-      const shoulder = createSegment(0.25, 1.5);
-      const elbow = createSegment(0.2, 1.2);
-      const wrist = createSegment(0.15, 0.8);
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-      // Assemble pivots hierarchically
-      base.group.position.set(-1.8, -0.8, 0);
-      scene.add(base.group);
+      // Shader Material representing HUD crosshairs
+      const loader = new THREE.TextureLoader();
+      // Draw a tiny circular glow particle programmatically
+      const pCanvas = document.createElement('canvas');
+      pCanvas.width = 16;
+      pCanvas.height = 16;
+      const pCtx = pCanvas.getContext('2d');
+      const grad = pCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
+      grad.addColorStop(0, 'rgba(0, 212, 255, 1)');
+      grad.addColorStop(0.3, 'rgba(0, 212, 255, 0.8)');
+      grad.addColorStop(1, 'rgba(0, 212, 255, 0)');
+      pCtx.fillStyle = grad;
+      pCtx.fillRect(0, 0, 16, 16);
 
-      shoulder.group.position.y = base.length;
-      base.group.add(shoulder.group);
+      const texture = new THREE.CanvasTexture(pCanvas);
+      const material = new THREE.PointsMaterial({
+        size: 0.5,
+        map: texture,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
 
-      elbow.group.position.y = shoulder.length;
-      shoulder.group.add(elbow.group);
+      const particles = new THREE.Points(geometry, material);
+      scene.add(particles);
 
-      wrist.group.position.y = elbow.length;
-      elbow.group.add(wrist.group);
+      // Track mouse position mapped to 3D coords
+      let mouse = { x: 0, y: 0 };
+      document.addEventListener('mousemove', e => {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      });
 
-      // Animation Loop
-      let t = 0;
-      let animSpeed = 0.005; // Controlled dynamically by widget slider
-      
-      function renderArm() {
-        t += animSpeed;
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const positionAttr = geometry.attributes.position;
+        const array = positionAttr.array;
+
+        // Dynamic speed multiplier from control widget
+        const speedMultiplier = particleAnimSpeed * 200;
+
+        for (let i = 0; i < particleCount; i++) {
+          const idx = i * 3;
+          let px = array[idx];
+          let py = array[idx + 1];
+          let pz = array[idx + 2];
+
+          // Slowly float
+          px += velocities[i].x * speedMultiplier;
+          py += velocities[i].y * speedMultiplier;
+          pz += velocities[i].z * speedMultiplier;
+
+          // Pull toward mouse position in 3D space
+          const targetX = mouse.x * 20;
+          const targetY = mouse.y * 10;
+          const dx = targetX - px;
+          const dy = targetY - py;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 12) {
+            px += dx * 0.015 * speedMultiplier;
+            py += dy * 0.015 * speedMultiplier;
+          }
+
+          // Boundary checks
+          if (px > 25 || px < -25) velocities[i].x *= -1;
+          if (py > 15 || py < -15) velocities[i].y *= -1;
+          if (pz > 10 || pz < -10) velocities[i].z *= -1;
+
+          array[idx] = px;
+          array[idx + 1] = py;
+          array[idx + 2] = pz;
+        }
+
+        positionAttr.needsUpdate = true;
         
-        // Continuous organic kinematic oscillation
-        base.group.rotation.y = Math.sin(t * 0.4) * 0.4;
-        shoulder.group.rotation.z = Math.sin(t * 0.6) * 0.25 - 0.2;
-        elbow.group.rotation.z = Math.sin(t * 0.9 + 1) * 0.4 + 0.3;
-        wrist.group.rotation.z = Math.sin(t * 1.2 + 2) * 0.2;
-        wrist.group.rotation.y = Math.sin(t * 0.8) * 0.5;
+        // Rotate the entire field slowly
+        particles.rotation.y += 0.0005 * speedMultiplier;
 
         renderer.render(scene, camera);
-        requestAnimationFrame(renderArm);
       }
-      renderArm();
+      animate();
 
-      // Connect slider to animation speed
+      // Connect speed controller slider
       const sliderSpeed = document.getElementById('param-speed');
       const valSpeed = document.getElementById('val-speed');
-      sliderSpeed.addEventListener('input', (e) => {
+      sliderSpeed.addEventListener('input', e => {
         const val = parseInt(e.target.value, 10);
-        valSpeed.textContent = `${val} MHz`;
-        // Interpolate slider value to rotation speed increment
-        animSpeed = 0.001 + (val / 2000) * 0.01;
+        valSpeed.textContent = `${val} Hz`;
+        particleAnimSpeed = (val / 2000) * 0.01;
       });
 
       // Resize listener
@@ -2664,7 +3397,7 @@
       });
     }
 
-    /* ══════════ 6. SIGNATURE TELEOPERATION SIMULATOR ══════════ */
+    /* ══════════ 7. SIGNATURE TELEOPERATION SIMULATOR ══════════ */
     function initTeleoperationSimulator() {
       const canvas = document.getElementById('teleop-canvas');
       if (!canvas) return;
@@ -2684,12 +3417,10 @@
       let frame = 0;
       let dataParticles = [];
 
-      // Joint states structure
       let leaderJoints = [0, 0, 0];
       let followerJoints = [0, 0, 0];
       let followerDelayQueue = [];
 
-      // Resize canvas relative to its container
       function fitCanvas() {
         canvas.width = canvas.parentElement.clientWidth;
         canvas.height = canvas.parentElement.clientHeight;
@@ -2697,7 +3428,6 @@
       window.addEventListener('resize', fitCanvas);
       fitCanvas();
 
-      // Event Listeners
       btnSync.addEventListener('click', () => {
         isPaused = !isPaused;
         btnSync.textContent = isPaused ? 'RESUME SYSTEM' : 'PAUSE SYSTEM';
@@ -2722,13 +3452,12 @@
         statusVal.style.color = hasNoise ? 'var(--warning)' : 'var(--accent)';
       });
 
-      // Simulation ticks
       function animateTeleop() {
         requestAnimationFrame(animateTeleop);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // Technical Grid Background
-        ctx.strokeStyle = 'rgba(15, 23, 42, 0.025)';
+        ctx.strokeStyle = 'rgba(0, 212, 255, 0.03)';
         ctx.lineWidth = 1;
         const spacing = 30;
         for (let x = 0; x < canvas.width; x += spacing) {
@@ -2744,7 +3473,6 @@
           ctx.stroke();
         }
 
-        // Compute arm kinematics
         if (!isPaused) {
           frame += highRate ? 0.05 : 0.025;
           
@@ -2753,14 +3481,12 @@
           leaderJoints[1] = Math.cos(frame * 1.1) * 0.5 + 0.4;
           leaderJoints[2] = Math.sin(frame * 1.5) * 0.3 + noise;
 
-          // Push into queue to simulate network latency delay
           const delayFrames = highRate ? 4 : 15;
           followerDelayQueue.push([...leaderJoints]);
           if (followerDelayQueue.length > delayFrames) {
             followerJoints = followerDelayQueue.shift();
           }
 
-          // Spawn data packet particles flowing left to right
           if (Math.random() < (highRate ? 0.4 : 0.15)) {
             dataParticles.push({
               x: canvas.width * 0.25,
@@ -2777,7 +3503,7 @@
         ctx.beginPath();
         ctx.moveTo(canvas.width * 0.25, canvas.height * 0.65);
         ctx.bezierCurveTo(canvas.width * 0.4, canvas.height * 0.45, canvas.width * 0.6, canvas.height * 0.45, canvas.width * 0.75, canvas.height * 0.65);
-        ctx.strokeStyle = 'rgba(15, 23, 42, 0.05)';
+        ctx.strokeStyle = 'rgba(0, 212, 255, 0.1)';
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
@@ -2790,7 +3516,6 @@
             continue;
           }
 
-          // Bezier interpolation
           const t = p.progress;
           const cp1x = canvas.width * 0.4, cp1y = canvas.height * 0.45;
           const cp2x = canvas.width * 0.6, cp2y = canvas.height * 0.45;
@@ -2799,22 +3524,18 @@
           const y = (1-t)**3 * p.y + 3*(1-t)**2 * t * cp1y + 3*(1-t)*t**2 * cp2y + t**3 * p.ty;
 
           ctx.beginPath();
-          ctx.arc(x, y, 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = highRate ? '#059669' : '#FF5C00';
+          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = highRate ? 'var(--accent)' : 'var(--primary)';
           ctx.fill();
         }
 
-        // Draw Arm 1 (Leader - Deep Cyan)
-        drawArm(canvas.width * 0.25, canvas.height * 0.8, leaderJoints, 'LEADER ARM', '#008299');
-        
-        // Draw Arm 2 (Follower - Kuka/Industrial Orange)
-        drawArm(canvas.width * 0.75, canvas.height * 0.8, followerJoints, 'FOLLOWER ARM', '#FF5C00');
+        drawArm(canvas.width * 0.25, canvas.height * 0.8, leaderJoints, 'LEADER ARM', 'var(--primary)');
+        drawArm(canvas.width * 0.75, canvas.height * 0.8, followerJoints, 'FOLLOWER ARM', 'var(--accent)');
       }
 
       function drawArm(baseX, baseY, joints, label, color) {
         const len1 = 60, len2 = 50, len3 = 30;
 
-        // Kinematics calculations
         const shoulderX = baseX;
         const shoulderY = baseY - 20;
 
@@ -2831,7 +3552,7 @@
         const tipY = wristY + Math.sin(theta3) * len3;
 
         // Draw Base Structure
-        ctx.strokeStyle = 'rgba(15, 23, 42, 0.08)';
+        ctx.strokeStyle = 'rgba(0, 212, 255, 0.15)';
         ctx.lineWidth = 6;
         ctx.beginPath();
         ctx.moveTo(baseX - 30, baseY);
@@ -2855,7 +3576,7 @@
         ctx.stroke();
 
         // Draw Joints nodes
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = 'var(--bg)';
         ctx.strokeStyle = color;
         ctx.lineWidth = 2.5;
         const jointsNodes = [[shoulderX, shoulderY], [elbowX, elbowY], [wristX, wristY]];
@@ -2866,18 +3587,17 @@
           ctx.stroke();
         });
 
-        // Draw gripper end-effector
         ctx.beginPath();
-        ctx.arc(tipX, tipY, 3, 0, Math.PI * 2);
+        ctx.arc(tipX, tipY, 3.5, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
 
         // Draw Labels
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.6)';
-        ctx.font = '600 8px "Fira Code", monospace';
+        ctx.fillStyle = 'rgba(226, 244, 255, 0.7)';
+        ctx.font = '8px "Fira Code", monospace';
         ctx.fillText(label, baseX - 30, baseY + 15);
 
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.4)';
+        ctx.fillStyle = 'rgba(226, 244, 255, 0.4)';
         ctx.fillText(`J0: ${joints[0].toFixed(2)} rad`, baseX - 30, baseY - 120);
         ctx.fillText(`J1: ${joints[1].toFixed(2)} rad`, baseX - 30, baseY - 110);
         ctx.fillText(`J2: ${joints[2].toFixed(2)} rad`, baseX - 30, baseY - 100);
@@ -2886,7 +3606,7 @@
       animateTeleop();
     }
 
-    /* ══════════ 7. COMMAND NODE LOGS TERMINAL ══════════ */
+    /* ══════════ 8. COMMAND NODE LOGS TERMINAL ══════════ */
     (function initCommandTerminal() {
       const terminal = document.getElementById('terminalLog');
       if (!terminal) return;
@@ -2923,14 +3643,12 @@
         
         terminal.appendChild(line);
 
-        // Keep terminal length limited
         if (terminal.children.length > 20) {
           terminal.removeChild(terminal.firstChild);
         }
 
         terminal.scrollTop = terminal.scrollHeight;
         
-        // Loop recursively with random delays
         setTimeout(addTerminalLine, Math.random() * 2000 + 800);
       }
 
@@ -2945,9 +3663,8 @@
       setTimeout(addTerminalLine, 1500);
     })();
 
-    /* ══════════ 8. TRANSMISSION CONTACT GATEWAY (EMAILJS) ══════════ */
+    /* ══════════ 9. TRANSMISSION CONTACT GATEWAY (EMAILJS) ══════════ */
     (function initContactGateway() {
-      // ── EMAILJS VALUES ──────────────
       const EMAILJS_PUBLIC_KEY = 'WtKXlyKrU-HS-A0si';
       const EMAILJS_SERVICE_ID = 'service_sae6cm5';
       const EMAILJS_TEMPLATE_ID = 'template_70nygza';
@@ -2965,9 +3682,8 @@
 
         btn.disabled = true;
         btn.textContent = '◈ SENDING...';
-        statusConsole.innerHTML = ''; // Clear status
+        statusConsole.innerHTML = '';
 
-        // Log sequence simulating terminal communication encryption
         const logSequence = [
           { text: 'ESTABLISHING SECURE GATEWAY CONNECTION...', delay: 100 },
           { text: 'HANDSHAKE STABLE. EXCHANGING API KEYS...', delay: 400 },
@@ -2997,7 +3713,6 @@
           to_email: 'athulkm617@gmail.com',
         };
 
-        // Submit to EmailJS
         setTimeout(() => {
           emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
             .then(() => {
@@ -3008,7 +3723,7 @@
               statusConsole.scrollTop = statusConsole.scrollHeight;
               
               form.reset();
-              btn.textContent = '⚡ SEND TRANSMISSION';
+              btn.textContent = 'TRANSMIT MESSAGE ▶';
               btn.disabled = false;
             })
             .catch(err => {
@@ -3019,44 +3734,45 @@
               statusConsole.appendChild(errSpan);
               statusConsole.scrollTop = statusConsole.scrollHeight;
               
-              btn.textContent = '⚡ SEND TRANSMISSION';
+              btn.textContent = 'TRANSMIT MESSAGE ▶';
               btn.disabled = false;
             });
         }, 1800);
       });
     })();
 
-    /* ══════════ 9. MOBILE NAVIGATION ACCORDION ══════════ */
+    /* ══════════ 10. MOBILE NAVIGATION ACCORDION ══════════ */
     (function initMobileMenu() {
       const ham = document.getElementById('hamburgerMenu');
       const links = document.getElementById('navLinks');
 
       ham.addEventListener('click', () => {
         links.classList.toggle('open');
+        ham.classList.toggle('open');
       });
 
-      // Close menu when clicking link
       document.querySelectorAll('#navLinks a').forEach(a => {
         a.addEventListener('click', () => {
           links.classList.remove('open');
+          ham.classList.remove('open');
         });
       });
     })();
 
-    /* ══════════ 10. GSAP ENTRY ANIMATIONS ══════════ */
+    /* ══════════ 11. GSAP ANIMATIONS & METRIC SCROLLING ══════════ */
     function initGSAPAnimations() {
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
       gsap.registerPlugin(ScrollTrigger);
 
       // Hero Entry Timeline
       const tl = gsap.timeline();
-      tl.fromTo('.identity-core', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' })
-        .fromTo('.sys-tag', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.8')
-        .fromTo('.hero-name', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.5')
-        .fromTo('.hero-role-badge', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.4 }, '-=0.3')
-        .fromTo('.hero-tagline', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, '-=0.2')
-        .fromTo('.hero-buttons', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.2')
-        .fromTo('.hardware-widget', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.1');
+      tl.fromTo('.identity-core', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' })
+        .fromTo('.sys-tag', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.6')
+        .fromTo('.hero-name', { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.4')
+        .fromTo('.hero-role-badge', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3 }, '-=0.3')
+        .fromTo('.hero-tagline', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4 }, '-=0.2')
+        .fromTo('.hero-buttons', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 }, '-=0.2')
+        .fromTo('.hardware-widget', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.3 }, '-=0.1');
 
       // Scroll sections title animations
       gsap.utils.toArray('.section-title').forEach(title => {
@@ -3069,46 +3785,81 @@
         );
       });
 
-      // Evolution progress pipeline track animation
-      gsap.to('#pipelineProgress', {
-        height: '92%',
+      // About Section Numbers Counting Up on Enter
+      const counterTargets = [
+        { id: '#stat-projects', val: 5 },
+        { id: '#stat-years', val: 2 },
+        { id: '#stat-packages', val: 12 }
+      ];
+
+      counterTargets.forEach(target => {
+        const obj = { val: 0 };
+        const el = document.querySelector(target.id);
+        gsap.to(obj, {
+          val: target.val,
+          duration: 1.5,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: '#about',
+            start: 'top 75%',
+            toggleActions: 'play none none none'
+          },
+          onUpdate: () => {
+            el.textContent = Math.floor(obj.val) + (target.id === '#stat-years' || target.id === '#stat-packages' ? '+' : '');
+          }
+        });
+      });
+
+      // Skills Panel Staggered Load & Fill Bars
+      gsap.utils.toArray('.skills-panel').forEach(panel => {
+        gsap.fromTo(panel,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1, y: 0, duration: 0.5,
+            scrollTrigger: { trigger: panel, start: 'top 85%' }
+          }
+        );
+      });
+
+      gsap.utils.toArray('.skill-bar-fill').forEach(bar => {
+        const targetPercent = bar.getAttribute('data-percent');
+        gsap.to(bar, {
+          width: targetPercent,
+          duration: 1.2,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: bar, start: 'top 90%' }
+        });
+      });
+
+      // Timeline Progress Trace Animation
+      gsap.to('#timeline-progress-bar', {
+        height: '100%',
         scrollTrigger: {
-          trigger: '.evolution-pipeline',
-          start: 'top 60%',
-          end: 'bottom 60%',
+          trigger: '.circuit-timeline-container',
+          start: 'top 50%',
+          end: 'bottom 50%',
           scrub: true
         }
       });
 
-      // Evolution stage cards triggering
-      gsap.utils.toArray('.pipeline-stage').forEach(stage => {
-        gsap.to(stage, {
+      // Timeline Nodes Staggered Activation
+      gsap.utils.toArray('.timeline-node-item').forEach(item => {
+        gsap.to(item, {
           scrollTrigger: {
-            trigger: stage,
-            start: 'top 75%',
-            onEnter: () => stage.classList.add('active'),
+            trigger: item,
+            start: 'top 65%',
+            onEnter: () => item.classList.add('active'),
             toggleActions: 'play none none none'
           }
         });
       });
 
-      // Systems windows staggered load
-      gsap.utils.toArray('.systems-grid .os-window').forEach((win, i) => {
-        gsap.fromTo(win,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1, y: 0, duration: 0.5, delay: i * 0.1,
-            scrollTrigger: { trigger: win, start: 'top 90%' }
-          }
-        );
-      });
-
-      // Project system cards staggered load
+      // Project Cards load stagger
       gsap.utils.toArray('.projects-grid .os-window').forEach((win, i) => {
         gsap.fromTo(win,
           { opacity: 0, y: 30 },
           {
-            opacity: 1, y: 0, duration: 0.5, delay: i * 0.15,
+            opacity: 1, y: 0, duration: 0.5, delay: i * 0.1,
             scrollTrigger: { trigger: win, start: 'top 90%' }
           }
         );
@@ -3119,7 +3870,7 @@
         gsap.fromTo(node,
           { opacity: 0, x: -30 },
           {
-            opacity: 1, x: 0, duration: 0.4, delay: i * 0.1,
+            opacity: 1, x: 0, duration: 0.4, delay: i * 0.08,
             scrollTrigger: { trigger: node, start: 'top 85%' }
           }
         );
@@ -3147,10 +3898,10 @@
       });
     }
 
-    // Connect density slider to grid stylesheet resolution
+    // Connect density slider to grid background size style
     const sliderGrid = document.getElementById('param-grid');
     const valGrid = document.getElementById('val-grid');
-    sliderGrid.addEventListener('input', (e) => {
+    sliderGrid.addEventListener('input', e => {
       const val = parseInt(e.target.value, 10);
       valGrid.textContent = `${val}px`;
       document.body.style.backgroundSize = `${val}px ${val}px`;
